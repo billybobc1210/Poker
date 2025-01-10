@@ -1,22 +1,6 @@
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 fun main() {
-    val foo = false
-
-    val items = listOf(2,4,6,8,10,11,12,14)
-
-    val evenItems =  items.takeWhile({ item ->
-        item % 2 == 0
-    }).filter({
-        it > 6
-    })
-    var i: Int = 0
-    var b: Boolean = true
-    while (i < 100 && b) {
-        var item = items[i++]
-    }
-    println(evenItems.joinToString(" "))
-
     for (i in 1..1000000) {
         var deck: StandardDeck = StandardDeck()
         deck.shuffle()
