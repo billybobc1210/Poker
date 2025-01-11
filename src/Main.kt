@@ -2,7 +2,7 @@
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 fun main() {
     for (i in 1..1000000) {
-        var deck: StandardDeck = StandardDeck()
+        val deck: StandardDeck = StandardDeck()
         deck.shuffle()
 
         val cards1 = arrayListOf<Card>()
