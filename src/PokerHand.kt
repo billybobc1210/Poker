@@ -1,7 +1,7 @@
 class PokerHand(val cards: ArrayList<Card>) {
     val rank: Int get() = calculateRank()
     private val handRankOccurrencesMap = mutableMapOf<Rank, Int>()
-    private val handSuitOccurrencesMap = mutableMapOf<Suit, Int>()
+    private val handSuitSet = mutableSetOf<Suit>()
 
     init {
         if (cards.size != 5) {
@@ -18,7 +18,7 @@ class PokerHand(val cards: ArrayList<Card>) {
         }
 
         buildHandRankOccurrencesMap()
-        buildHandSuitOccurrencesMap()
+        buildHandSuitSet()
     }
 
     private fun buildHandRankOccurrencesMap() {
@@ -28,10 +28,9 @@ class PokerHand(val cards: ArrayList<Card>) {
         }
     }
 
-    private fun buildHandSuitOccurrencesMap() {
+    private fun buildHandSuitSet() {
         cards.forEach { card ->
-            val suitOccurrences = handSuitOccurrencesMap[card.suit] ?: 0
-            handSuitOccurrencesMap[card.suit] = suitOccurrences + 1
+            handSuitSet.add(card.suit)
         }
     }
 
@@ -281,7 +280,7 @@ class PokerHand(val cards: ArrayList<Card>) {
     }
 
     private fun isFlush(): Boolean {
-        return handSuitOccurrencesMap.size == 1
+        return handSuitSet.size == 1
     }
 
     private fun relativeStraightRank(): Int {
