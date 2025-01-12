@@ -174,6 +174,7 @@ class PokerHandTest {
         pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MAX_STRAIGHT_FLUSH_RANK-9, pokerHand.rank)
         assertEquals(PokerHand.MIN_STRAIGHT_FLUSH_RANK, pokerHand.rank)
+        assertEquals(PokerHand.MAX_FOUR_OF_A_KIND_RANK+1, pokerHand.rank)
     }
 
     @Test
@@ -187,6 +188,7 @@ class PokerHandTest {
         )
         var pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MAX_FOUR_OF_A_KIND_RANK, pokerHand.rank)
+        assertEquals(PokerHand.MIN_STRAIGHT_FLUSH_RANK-1, pokerHand.rank)
 
         cards = arrayListOf<Card>(
             Card(Rank.ACE, Suit.SPADES),
@@ -217,6 +219,7 @@ class PokerHandTest {
         )
         pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MIN_FOUR_OF_A_KIND_RANK, pokerHand.rank)
+        assertEquals(PokerHand.MAX_FULL_HOUSE_RANK+1, pokerHand.rank)
     }
 
     @Test
@@ -230,6 +233,7 @@ class PokerHandTest {
         )
         var pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MAX_FULL_HOUSE_RANK, pokerHand.rank)
+        assertEquals(PokerHand.MIN_FOUR_OF_A_KIND_RANK-1, pokerHand.rank)
 
         cards = arrayListOf<Card>(
             Card(Rank.ACE, Suit.SPADES),
@@ -260,6 +264,7 @@ class PokerHandTest {
         )
         pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MIN_FULL_HOUSE_RANK, pokerHand.rank)
+        assertEquals(PokerHand.MAX_FLUSH_RANK+1, pokerHand.rank)
     }
 
     @Test
@@ -274,6 +279,7 @@ class PokerHandTest {
 
         var pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MAX_FLUSH_RANK, pokerHand.rank)
+        assertEquals(PokerHand.MIN_FULL_HOUSE_RANK-1, pokerHand.rank)
 
         cards = arrayListOf<Card>(
             Card(Rank.ACE, Suit.SPADES),
@@ -296,6 +302,7 @@ class PokerHandTest {
 
         pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MIN_FLUSH_RANK, pokerHand.rank)
+        assertEquals(PokerHand.MAX_STRAIGHT_RANK+1, pokerHand.rank)
     }
 
     @Test
@@ -310,6 +317,7 @@ class PokerHandTest {
 
         var pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MAX_STRAIGHT_RANK, pokerHand.rank)
+        assertEquals(PokerHand.MIN_FLUSH_RANK-1, pokerHand.rank)
 
         cards = arrayListOf<Card>(
             Card(Rank.KING, Suit.DIAMONDS),
@@ -343,6 +351,7 @@ class PokerHandTest {
 
         pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MIN_STRAIGHT_RANK, pokerHand.rank)
+        assertEquals(PokerHand.MAX_THREE_OF_A_KIND_RANK+1, pokerHand.rank)
     }
 
     @Test
@@ -357,6 +366,7 @@ class PokerHandTest {
 
         var pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MAX_THREE_OF_A_KIND_RANK, pokerHand.rank)
+        assertEquals(PokerHand.MIN_STRAIGHT_RANK-1, pokerHand.rank)
 
         cards = arrayListOf<Card>(
             Card(Rank.ACE, Suit.SPADES),
@@ -379,6 +389,7 @@ class PokerHandTest {
 
         pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MIN_THREE_OF_A_KIND_RANK, pokerHand.rank)
+        assertEquals(PokerHand.MAX_TWO_PAIR_RANK+1, pokerHand.rank)
     }
 
     @Test
@@ -393,6 +404,7 @@ class PokerHandTest {
 
         var pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MAX_TWO_PAIR_RANK, pokerHand.rank)
+        assertEquals(PokerHand.MIN_THREE_OF_A_KIND_RANK-1, pokerHand.rank)
 
         cards = arrayListOf<Card>(
             Card(Rank.JACK, Suit.SPADES),
@@ -415,6 +427,7 @@ class PokerHandTest {
 
         pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MIN_TWO_PAIR_RANK, pokerHand.rank)
+        assertEquals(PokerHand.MAX_PAIR_RANK+1, pokerHand.rank)
     }
 
     @Test
@@ -429,6 +442,7 @@ class PokerHandTest {
 
         var pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MAX_PAIR_RANK, pokerHand.rank)
+        assertEquals(PokerHand.MIN_TWO_PAIR_RANK-1, pokerHand.rank)
 
         cards = arrayListOf<Card>(
             Card(Rank.TEN, Suit.SPADES),
@@ -462,6 +476,7 @@ class PokerHandTest {
 
         pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MIN_PAIR_RANK, pokerHand.rank)
+        assertEquals(PokerHand.MAX_HIGH_CARD_RANK+1, pokerHand.rank)
     }
 
     @Test
@@ -476,6 +491,7 @@ class PokerHandTest {
 
         var pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MAX_HIGH_CARD_RANK, pokerHand.rank)
+        assertEquals(PokerHand.MIN_PAIR_RANK-1, pokerHand.rank)
 
         cards = arrayListOf<Card>(
             Card(Rank.ACE, Suit.SPADES),
