@@ -115,7 +115,9 @@ class PokerHand(val cards: ArrayList<Card>) {
                     kickerRankValue
                 ).joinToString(" ")
 
-                return MIN_FOUR_OF_A_KIND_RANK + (fourOfAKindAndFullHouseRankMap[fourOfAKindRankMapKey] ?: 0)
+                fourOfAKindAndFullHouseRelativeRankMap[fourOfAKindRankMapKey]?.let { relativeRank ->
+                    return MIN_FOUR_OF_A_KIND_RANK + relativeRank
+                }
             }
         }
 
@@ -141,7 +143,9 @@ class PokerHand(val cards: ArrayList<Card>) {
                     pairRankValue
                 ).joinToString(" ")
 
-                return MIN_FULL_HOUSE_RANK + (fourOfAKindAndFullHouseRankMap[fullHouseRankMapKey] ?: 0)
+                fourOfAKindAndFullHouseRelativeRankMap[fullHouseRankMapKey]?.let { relativeRank ->
+                    return MIN_FULL_HOUSE_RANK + relativeRank
+                }
             }
         }
 
@@ -152,7 +156,9 @@ class PokerHand(val cards: ArrayList<Card>) {
         if (isFlush()) {
             val key = buildHighCardRankKey()
 
-            return MIN_FLUSH_RANK + (highCardRankMap[key] ?: 0)
+            highCardRelativeRankMap[key]?.let { relativeRank ->
+                return MIN_FLUSH_RANK + relativeRank
+            }
         }
 
         return -1
@@ -183,7 +189,9 @@ class PokerHand(val cards: ArrayList<Card>) {
                 kickerRankValues.sortDescending()
                 val threeOfAKindRankMapKey = arrayListOf<Int>(threeOfAKindRank).plus(kickerRankValues).joinToString(" ")
 
-                return MIN_THREE_OF_A_KIND_RANK + (threeOfAKindRankMap[threeOfAKindRankMapKey] ?: 0)
+                threeOfAKindRelativeRankMap[threeOfAKindRankMapKey]?.let { relativeRank ->
+                    return MIN_THREE_OF_A_KIND_RANK + relativeRank
+                }
             }
         }
 
@@ -207,7 +215,9 @@ class PokerHand(val cards: ArrayList<Card>) {
                 pairRankValues.sortDescending()
                 val twoPairRankMapKey = pairRankValues.plus(kickerRankValue).joinToString(" ")
 
-                return MIN_TWO_PAIR_RANK + (twoPairRankMap[twoPairRankMapKey] ?: 0)
+                twoPairRelativeRankMap[twoPairRankMapKey]?.let { relativeRank ->
+                    return MIN_TWO_PAIR_RANK + relativeRank
+                }
             }
         }
 
@@ -231,7 +241,9 @@ class PokerHand(val cards: ArrayList<Card>) {
                 kickerRankValues.sortDescending()
                 val pairRankMapKey = arrayListOf(pairRankValue).plus(kickerRankValues).joinToString(" ")
 
-                return MIN_PAIR_RANK + (pairRankMap[pairRankMapKey] ?: 0)
+                pairRelativeRankMap[pairRankMapKey]?.let { relativeRank ->
+                    return MIN_PAIR_RANK + relativeRank
+                }
             }
         }
 
@@ -240,7 +252,11 @@ class PokerHand(val cards: ArrayList<Card>) {
 
     private fun calculateHighCardRank(): Int {
         val key = buildHighCardRankKey()
-        return highCardRankMap[key] ?: 0
+        highCardRelativeRankMap[key]?.let { relativeRank ->
+            return MIN_HIGH_CARD_RANK + relativeRank
+        }
+
+        return -1
     }
 
     private fun isStraight(): Boolean {
@@ -328,11 +344,11 @@ class PokerHand(val cards: ArrayList<Card>) {
         val MIN_STRAIGHT_FLUSH_RANK: Int = MAX_FOUR_OF_A_KIND_RANK + 1
         val MAX_STRAIGHT_FLUSH_RANK: Int = MIN_STRAIGHT_FLUSH_RANK + NUM_STRAIGHT_FLUSH_RANKS - 1
 
-        private val fourOfAKindAndFullHouseRankMap = mutableMapOf<String, Int>()
-        private val threeOfAKindRankMap = mutableMapOf<String, Int>()
-        private val twoPairRankMap = mutableMapOf<String, Int>()
-        private val pairRankMap = mutableMapOf<String, Int>()
-        private val highCardRankMap = mutableMapOf<String, Int>()
+        private val fourOfAKindAndFullHouseRelativeRankMap = mutableMapOf<String, Int>()
+        private val threeOfAKindRelativeRankMap = mutableMapOf<String, Int>()
+        private val twoPairRelativeRankMap = mutableMapOf<String, Int>()
+        private val pairRelativeRankMap = mutableMapOf<String, Int>()
+        private val highCardRelativeRankMap = mutableMapOf<String, Int>()
 
         private fun buildFourOfAKindAndFullHouseRankMap() {
             var rank: Int = NUM_FOUR_OF_A_KIND_RANKS - 1
@@ -349,7 +365,7 @@ class PokerHand(val cards: ArrayList<Card>) {
                     ).joinToString(" ")
 
 //                    println("$key -> $rank")
-                    fourOfAKindAndFullHouseRankMap[key] = rank--
+                    fourOfAKindAndFullHouseRelativeRankMap[key] = rank--
                 }
             }
         }
@@ -373,7 +389,7 @@ class PokerHand(val cards: ArrayList<Card>) {
                         ).joinToString(" ")
 
 //                        println("$key -> $rank")
-                        threeOfAKindRankMap[key] = rank--
+                        threeOfAKindRelativeRankMap[key] = rank--
                     }
                 }
             }
@@ -398,7 +414,7 @@ class PokerHand(val cards: ArrayList<Card>) {
                         ).joinToString(" ")
 
 //                        println("$key -> $rank")
-                        twoPairRankMap[key] = rank--
+                        twoPairRelativeRankMap[key] = rank--
                     }
                 }
             }
@@ -428,7 +444,7 @@ class PokerHand(val cards: ArrayList<Card>) {
                             ).joinToString(" ")
 
 //                            println("$key -> $rank")
-                            pairRankMap[key] = rank--
+                            pairRelativeRankMap[key] = rank--
                         }
                     }
                 }
@@ -457,7 +473,7 @@ class PokerHand(val cards: ArrayList<Card>) {
                                 }
 
 //                                println("$key -> $rank")
-                                highCardRankMap[key] = rank--
+                                highCardRelativeRankMap[key] = rank--
                             }
                         }
                     }
