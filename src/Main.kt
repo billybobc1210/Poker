@@ -4,15 +4,14 @@ fun main() {
         deck.shuffle()
 
         val cards1 = arrayListOf<Card>()
+        val cards2 = arrayListOf<Card>()
+
         for (j in 1 .. 5) {
             cards1.add(deck.dealTopCard())
-        }
-        val hand1 = PokerHand(cards1)
-
-        val cards2 = arrayListOf<Card>()
-        for (j in 1 .. 5) {
             cards2.add(deck.dealTopCard())
         }
+
+        val hand1 = PokerHand(cards1)
         val hand2 = PokerHand(cards2)
 
         val rank1 = hand1.rank
