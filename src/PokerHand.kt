@@ -165,7 +165,7 @@ class PokerHand(val cards: ArrayList<Card>) {
     }
 
     private fun calculateStraightRank(): Int {
-        if (isStraight() && !isFlush()) {
+        if (isStraight()) {
             return MIN_STRAIGHT_RANK + relativeStraightRank()
         }
 
