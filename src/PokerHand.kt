@@ -36,43 +36,7 @@ class PokerHand(val cards: ArrayList<Card>) {
     }
 
     private fun calculateRank(): Int {
-        var result: Int = calculateStraightFlushRank()
-
-        if (result >= 0) {
-            return result
-        }
-
-        result = calculateFourOfAKindRank()
-
-        if (result >= 0) {
-            return result
-        }
-
-        result = calculateFullHouseRank()
-
-        if (result >= 0) {
-            return result
-        }
-
-        result = calculateFlushRank()
-
-        if (result >= 0) {
-            return result
-        }
-
-        result = calculateStraightRank()
-
-        if (result >= 0) {
-            return result
-        }
-
-        result = calculateThreeOfAKindRank()
-
-        if (result >= 0) {
-            return result
-        }
-
-        result = calculateTwoPairRank()
+        var result: Int = calculateHighCardRank()
 
         if (result >= 0) {
             return result
@@ -84,7 +48,43 @@ class PokerHand(val cards: ArrayList<Card>) {
             return result
         }
 
-        return calculateHighCardRank()
+        result = calculateTwoPairRank()
+
+        if (result >= 0) {
+            return result
+        }
+
+        result = calculateThreeOfAKindRank()
+
+        if (result >= 0) {
+            return result
+        }
+
+        result = calculateStraightRank()
+
+        if (result >= 0) {
+            return result
+        }
+
+        result = calculateFlushRank()
+
+        if (result >= 0) {
+            return result
+        }
+
+        result = calculateFullHouseRank()
+
+        if (result >= 0) {
+            return result
+        }
+
+        result = calculateFourOfAKindRank()
+
+        if (result >= 0) {
+            return result
+        }
+
+        return calculateStraightFlushRank()
     }
 
     private fun calculateStraightFlushRank(): Int {
@@ -168,16 +168,18 @@ class PokerHand(val cards: ArrayList<Card>) {
     }
 
     private fun calculateStraightRank(): Int {
-        val handHighRankValueKey = buildHandHighRankValueKey()
+        if (!isFlush()) {
+            val handHighRankValueKey = buildHandHighRankValueKey()
 
-        straightRelativeRankMap[handHighRankValueKey]?.let { relativeRank ->
-            return MIN_STRAIGHT_RANK + relativeRank
-        }
+            straightRelativeRankMap[handHighRankValueKey]?.let { relativeRank ->
+                return MIN_STRAIGHT_RANK + relativeRank
+            }
 
-        val handLowRankValueKey = buildHandLowRankValueKey()
+            val handLowRankValueKey = buildHandLowRankValueKey()
 
-        straightRelativeRankMap[handLowRankValueKey]?.let { relativeRank ->
-            return MIN_STRAIGHT_RANK + relativeRank
+            straightRelativeRankMap[handLowRankValueKey]?.let { relativeRank ->
+                return MIN_STRAIGHT_RANK + relativeRank
+            }
         }
 
         return -1
@@ -262,9 +264,11 @@ class PokerHand(val cards: ArrayList<Card>) {
     }
 
     private fun calculateHighCardRank(): Int {
-        val key = buildHandHighRankValueKey()
-        highCardRelativeRankMap[key]?.let { relativeRank ->
-            return MIN_HIGH_CARD_RANK + relativeRank
+        if (!isFlush()) {
+            val key = buildHandHighRankValueKey()
+            highCardRelativeRankMap[key]?.let { relativeRank ->
+                return MIN_HIGH_CARD_RANK + relativeRank
+            }
         }
 
         return -1
