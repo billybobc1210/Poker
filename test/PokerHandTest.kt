@@ -6,7 +6,7 @@ class PokerHandTest {
     @Test
     fun tooManyCardsTest() {
         var validHand = true
-        var cards = arrayListOf<Card>(
+        val cards = arrayListOf<Card>(
             Card(Rank.ACE, Suit.SPADES),
             Card(Rank.KING, Suit.SPADES),
             Card(Rank.QUEEN, Suit.SPADES),
@@ -27,7 +27,7 @@ class PokerHandTest {
     @Test
     fun tooFewCardsTest() {
         var validHand = true
-        var cards = arrayListOf<Card>(
+        val cards = arrayListOf<Card>(
             Card(Rank.QUEEN, Suit.SPADES),
             Card(Rank.JACK, Suit.SPADES),
             Card(Rank.TEN, Suit.SPADES),
@@ -46,7 +46,7 @@ class PokerHandTest {
     @Test
     fun duplicateCardsTest() {
         var validHand = true
-        var cards = arrayListOf<Card>(
+        val cards = arrayListOf<Card>(
             Card(Rank.QUEEN, Suit.SPADES),
             Card(Rank.QUEEN, Suit.SPADES),
             Card(Rank.JACK, Suit.SPADES),
