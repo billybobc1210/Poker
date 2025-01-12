@@ -84,7 +84,13 @@ class PokerHand(val cards: ArrayList<Card>) {
             return result
         }
 
-        return calculateStraightFlushRank()
+        result = calculateStraightFlushRank()
+
+        if (result >= 0) {
+            return result
+        }
+
+        throw Exception("Invalid poker hand")
     }
 
     private fun calculateStraightFlushRank(): Int {
