@@ -2,7 +2,6 @@ class PokerHand(val cards: ArrayList<Card>) {
     val rank: Int get() = calculateRank()
     private val handRankOccurrencesMap = mutableMapOf<Rank, Int>()
     private val handSuitOccurrencesMap = mutableMapOf<Suit, Int>()
-    private var relativeStraightRank: Int = -1
 
     init {
         if (cards.size != 5) {
@@ -89,8 +88,12 @@ class PokerHand(val cards: ArrayList<Card>) {
     }
 
     private fun calculateStraightFlushRank(): Int {
-        if (isFlush() && isStraight()) {
-            return MIN_STRAIGHT_FLUSH_RANK + relativeStraightRank()
+        if (isFlush()) {
+            val relativeStraightRank = relativeStraightRank()
+
+            if (relativeStraightRank >= 0) {
+                return MIN_STRAIGHT_FLUSH_RANK + relativeStraightRank
+            }
         }
 
         return -1
@@ -154,7 +157,7 @@ class PokerHand(val cards: ArrayList<Card>) {
 
     private fun calculateFlushRank(): Int {
         if (isFlush()) {
-            val key = buildHighCardRankKey()
+            val key = buildHandHighRankValueKey()
 
             highCardRelativeRankMap[key]?.let { relativeRank ->
                 return MIN_FLUSH_RANK + relativeRank
@@ -165,8 +168,16 @@ class PokerHand(val cards: ArrayList<Card>) {
     }
 
     private fun calculateStraightRank(): Int {
-        if (isStraight()) {
-            return MIN_STRAIGHT_RANK + relativeStraightRank()
+        val handHighRankValueKey = buildHandHighRankValueKey()
+
+        straightRelativeRankMap[handHighRankValueKey]?.let { relativeRank ->
+            return MIN_STRAIGHT_RANK + relativeRank
+        }
+
+        val handLowRankValueKey = buildHandLowRankValueKey()
+
+        straightRelativeRankMap[handLowRankValueKey]?.let { relativeRank ->
+            return MIN_STRAIGHT_RANK + relativeRank
         }
 
         return -1
@@ -251,7 +262,7 @@ class PokerHand(val cards: ArrayList<Card>) {
     }
 
     private fun calculateHighCardRank(): Int {
-        val key = buildHighCardRankKey()
+        val key = buildHandHighRankValueKey()
         highCardRelativeRankMap[key]?.let { relativeRank ->
             return MIN_HIGH_CARD_RANK + relativeRank
         }
@@ -259,47 +270,43 @@ class PokerHand(val cards: ArrayList<Card>) {
         return -1
     }
 
-    private fun isStraight(): Boolean {
-        return relativeStraightRank() != -1
-    }
-
     private fun isFlush(): Boolean {
         return handSuitOccurrencesMap.size == 1
     }
 
     private fun relativeStraightRank(): Int {
-        if (relativeStraightRank < 0) {
-            if (handRankOccurrencesMap.size == 5) {
-                val lowRankValues = arrayListOf<Int>()
-                cards.forEach { card ->
-                    lowRankValues.add(card.rank.lowValue)
-                }
-                lowRankValues.sort()
+        val handHighRankValueKey = buildHandHighRankValueKey()
 
-                if (lowRankValues[4] - lowRankValues[0] == 4) {
-                    relativeStraightRank = lowRankValues[0] - Rank.ACE.lowValue
-                }
-
-                val highRankValues = arrayListOf<Int>()
-                cards.forEach { card ->
-                    highRankValues.add(card.rank.highValue)
-                }
-                highRankValues.sort()
-
-                if (highRankValues[4] - highRankValues[0] == 4) {
-                    relativeStraightRank = highRankValues[0] - Rank.ACE.lowValue
-                }
-            }
+        straightRelativeRankMap[handHighRankValueKey]?.let { relativeRank ->
+            return relativeRank
         }
 
-        return relativeStraightRank
+        val handLowRankValueKey = buildHandLowRankValueKey()
+
+        straightRelativeRankMap[handLowRankValueKey]?.let { relativeRank ->
+            return relativeRank
+        }
+
+        return -1
     }
 
-    private fun buildHighCardRankKey(): String {
+    private fun buildHandHighRankValueKey(): String {
         val rankValues = arrayListOf<Int>()
 
         cards.forEach { card ->
             rankValues.add(card.rank.highValue)
+        }
+
+        rankValues.sortDescending()
+
+        return rankValues.joinToString(" ")
+    }
+
+    private fun buildHandLowRankValueKey(): String {
+        val rankValues = arrayListOf<Int>()
+
+        cards.forEach { card ->
+            rankValues.add(card.rank.lowValue)
         }
 
         rankValues.sortDescending()
@@ -344,11 +351,27 @@ class PokerHand(val cards: ArrayList<Card>) {
         val MIN_STRAIGHT_FLUSH_RANK: Int = MAX_FOUR_OF_A_KIND_RANK + 1
         val MAX_STRAIGHT_FLUSH_RANK: Int = MIN_STRAIGHT_FLUSH_RANK + NUM_STRAIGHT_FLUSH_RANKS - 1
 
+        private val straightRelativeRankMap = mutableMapOf<String, Int>()
         private val fourOfAKindAndFullHouseRelativeRankMap = mutableMapOf<String, Int>()
         private val threeOfAKindRelativeRankMap = mutableMapOf<String, Int>()
         private val twoPairRelativeRankMap = mutableMapOf<String, Int>()
         private val pairRelativeRankMap = mutableMapOf<String, Int>()
         private val highCardRelativeRankMap = mutableMapOf<String, Int>()
+
+        private fun buildStraightRelativeRankMap() {
+            var rank: Int = NUM_STRAIGHT_RANKS - 1
+
+            straightRelativeRankMap["14 13 12 11 10"] = rank--
+            straightRelativeRankMap["13 12 11 10 9"] = rank--
+            straightRelativeRankMap["12 11 10 9 8"] = rank--
+            straightRelativeRankMap["11 10 9 8 7"] = rank--
+            straightRelativeRankMap["10 9 8 7 6"] = rank--
+            straightRelativeRankMap["9 8 7 6 5"] = rank--
+            straightRelativeRankMap["8 7 6 5 4"] = rank--
+            straightRelativeRankMap["7 6 5 4 3"] = rank--
+            straightRelativeRankMap["6 5 4 3 2"] = rank--
+            straightRelativeRankMap["5 4 3 2 1"] = rank--
+        }
 
         private fun buildFourOfAKindAndFullHouseRelativeRankMap() {
             var rank: Int = NUM_FOUR_OF_A_KIND_RANKS - 1
@@ -452,7 +475,7 @@ class PokerHand(val cards: ArrayList<Card>) {
         }
 
         private fun buildHighCardRelativeRankMap() {
-            var rank: Int = NUM_FLUSH_RANKS - 1
+            var rank: Int = NUM_HIGH_CARD_RANKS - 1
 
             for (highCardRank in 14 downTo 6) {
                 for (secondHighestCardRank in highCardRank - 1 downTo 5) {
@@ -482,6 +505,7 @@ class PokerHand(val cards: ArrayList<Card>) {
         }
 
         init {
+            buildStraightRelativeRankMap()
             buildFourOfAKindAndFullHouseRelativeRankMap()
             buildThreeOfAKindRelativeRankMap()
             buildTwoPairRelativeRankMap()
