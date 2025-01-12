@@ -56,6 +56,7 @@ class StandardDeck {
     var topCardIndex = 0;
 
     fun shuffle() {
+        topCardIndex = 0;
         cards.forEachIndexed { i, card ->
             var r = (0..51).random()
             cards[i] = cards[r]

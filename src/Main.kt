@@ -1,6 +1,6 @@
 fun main() {
+    val deck: StandardDeck = StandardDeck()
     for (i in 1..1000000) {
-        val deck: StandardDeck = StandardDeck()
         deck.shuffle()
 
         val cards1 = arrayListOf<Card>()
