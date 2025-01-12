@@ -72,6 +72,10 @@ class StandardDeck {
         return cards[this.topCardIndex++]
     }
 
+    fun peekAtCard(i: Int): Card {
+        return cards[i]
+    }
+
     fun display() {
         cards.forEachIndexed { i, card ->
             println(card)
