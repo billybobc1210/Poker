@@ -1,4 +1,4 @@
-class PokerHand(val cards: ArrayList<Card>) {
+class PokerHand(private val cards: ArrayList<Card>) {
     val rank: Int get() = calculateRank()
     private val handRankOccurrencesMap = mutableMapOf<Rank, Int>()
     private val handSuitSet = mutableSetOf<Suit>()
@@ -106,8 +106,8 @@ class PokerHand(val cards: ArrayList<Card>) {
 
     private fun calculateFourOfAKindRank(): Int {
         if (handRankOccurrencesMap.size == 2) {
-            var fourOfAKindRankValue: Int = 0
-            var kickerRankValue: Int = 0
+            var fourOfAKindRankValue = 0
+            var kickerRankValue = 0
 
             handRankOccurrencesMap.keys.forEach { rank ->
                 if (handRankOccurrencesMap[rank] == 4) {
@@ -118,7 +118,7 @@ class PokerHand(val cards: ArrayList<Card>) {
             }
 
             if ((fourOfAKindRankValue > 0) && (kickerRankValue > 0)) {
-                val fourOfAKindRankMapKey = arrayListOf<Int>(
+                val fourOfAKindRankMapKey = arrayListOf(
                     fourOfAKindRankValue,
                     kickerRankValue
                 ).joinToString(" ")
@@ -134,8 +134,8 @@ class PokerHand(val cards: ArrayList<Card>) {
 
     private fun calculateFullHouseRank(): Int {
         if (handRankOccurrencesMap.size == 2) {
-            var threeOfAKindRankValue: Int = 0
-            var pairRankValue: Int = 0
+            var threeOfAKindRankValue = 0
+            var pairRankValue = 0
 
             handRankOccurrencesMap.keys.forEach { rank ->
                 if (handRankOccurrencesMap[rank] == 3) {
@@ -146,7 +146,7 @@ class PokerHand(val cards: ArrayList<Card>) {
             }
 
             if ((threeOfAKindRankValue > 0) && (pairRankValue > 0)) {
-                val fullHouseRankMapKey = arrayListOf<Int>(
+                val fullHouseRankMapKey = arrayListOf(
                     threeOfAKindRankValue,
                     pairRankValue
                 ).joinToString(" ")
@@ -192,7 +192,7 @@ class PokerHand(val cards: ArrayList<Card>) {
 
     private fun calculateThreeOfAKindRank(): Int {
         if (handRankOccurrencesMap.size == 3) {
-            var threeOfAKindRank: Int = 0
+            var threeOfAKindRank = 0
             val kickerRankValues = arrayListOf<Int>()
 
             handRankOccurrencesMap.keys.forEach { rank ->
@@ -205,7 +205,7 @@ class PokerHand(val cards: ArrayList<Card>) {
 
             if ((threeOfAKindRank > 0) && (kickerRankValues.size == 2)) {
                 kickerRankValues.sortDescending()
-                val threeOfAKindRankMapKey = arrayListOf<Int>(threeOfAKindRank).plus(kickerRankValues).joinToString(" ")
+                val threeOfAKindRankMapKey = arrayListOf(threeOfAKindRank).plus(kickerRankValues).joinToString(" ")
 
                 threeOfAKindRelativeRankMap[threeOfAKindRankMapKey]?.let { relativeRank ->
                     return MIN_THREE_OF_A_KIND_RANK + relativeRank
@@ -219,7 +219,7 @@ class PokerHand(val cards: ArrayList<Card>) {
     private fun calculateTwoPairRank(): Int {
         if (handRankOccurrencesMap.size == 3) {
             val pairRankValues = arrayListOf<Int>()
-            var kickerRankValue: Int = 0
+            var kickerRankValue = 0
 
             handRankOccurrencesMap.keys.forEach { rank ->
                 if (handRankOccurrencesMap[rank] == 2) {
@@ -244,7 +244,7 @@ class PokerHand(val cards: ArrayList<Card>) {
 
     private fun calculatePairRank(): Int {
         if (handRankOccurrencesMap.size == 4) {
-            var pairRankValue: Int = 0
+            var pairRankValue = 0
             val kickerRankValues = arrayListOf<Int>()
 
             handRankOccurrencesMap.keys.forEach { rank ->
@@ -324,41 +324,41 @@ class PokerHand(val cards: ArrayList<Card>) {
     }
 
     override fun toString(): String {
-        return cards.fold("",  { acc, card ->
-            var prefix = if (acc.equals("")) "" else " "
+        return cards.fold("") { acc, card ->
+            val prefix = if (acc == "") "" else " "
 
             acc + prefix + card.abbreviation
-        })
+        }
     }
 
     companion object {
-        val NUM_HIGH_CARD_RANKS: Int = 1277
-        val MIN_HIGH_CARD_RANK: Int = 0
-        val MAX_HIGH_CARD_RANK: Int = MIN_HIGH_CARD_RANK + NUM_HIGH_CARD_RANKS - 1
-        val NUM_PAIR_RANKS: Int = 2860
-        val MIN_PAIR_RANK: Int = MAX_HIGH_CARD_RANK + 1
-        val MAX_PAIR_RANK: Int = MIN_PAIR_RANK + NUM_PAIR_RANKS - 1
-        val NUM_TWO_PAIR_RANKS = 858
-        val MIN_TWO_PAIR_RANK: Int = MAX_PAIR_RANK + 1
-        val MAX_TWO_PAIR_RANK: Int = MIN_TWO_PAIR_RANK + NUM_TWO_PAIR_RANKS - 1
-        val NUM_THREE_OF_A_KIND_RANKS: Int = 858
-        val MIN_THREE_OF_A_KIND_RANK: Int = MAX_TWO_PAIR_RANK + 1
-        val MAX_THREE_OF_A_KIND_RANK: Int = MIN_THREE_OF_A_KIND_RANK + NUM_THREE_OF_A_KIND_RANKS - 1
-        val NUM_STRAIGHT_RANKS: Int = 10
-        val MIN_STRAIGHT_RANK: Int = MAX_THREE_OF_A_KIND_RANK + 1
-        val MAX_STRAIGHT_RANK: Int = MIN_STRAIGHT_RANK + NUM_STRAIGHT_RANKS - 1
-        val NUM_FLUSH_RANKS: Int = 1277
-        val MIN_FLUSH_RANK: Int = MAX_STRAIGHT_RANK + 1
-        val MAX_FLUSH_RANK: Int = MIN_FLUSH_RANK + NUM_FLUSH_RANKS - 1
-        val NUM_FULL_HOUSE_RANKS: Int = 156
-        val MIN_FULL_HOUSE_RANK: Int = MAX_FLUSH_RANK + 1
-        val MAX_FULL_HOUSE_RANK: Int = MIN_FULL_HOUSE_RANK + NUM_FULL_HOUSE_RANKS - 1
-        val NUM_FOUR_OF_A_KIND_RANKS = 156
-        val MIN_FOUR_OF_A_KIND_RANK: Int = MAX_FULL_HOUSE_RANK + 1
-        val MAX_FOUR_OF_A_KIND_RANK: Int = MIN_FOUR_OF_A_KIND_RANK + NUM_FOUR_OF_A_KIND_RANKS - 1
-        val NUM_STRAIGHT_FLUSH_RANKS: Int = 10
-        val MIN_STRAIGHT_FLUSH_RANK: Int = MAX_FOUR_OF_A_KIND_RANK + 1
-        val MAX_STRAIGHT_FLUSH_RANK: Int = MIN_STRAIGHT_FLUSH_RANK + NUM_STRAIGHT_FLUSH_RANKS - 1
+        const val NUM_HIGH_CARD_RANKS: Int = 1277
+        const val MIN_HIGH_CARD_RANK: Int = 0
+        const val MAX_HIGH_CARD_RANK: Int = MIN_HIGH_CARD_RANK + NUM_HIGH_CARD_RANKS - 1
+        const val NUM_PAIR_RANKS: Int = 2860
+        const val MIN_PAIR_RANK: Int = MAX_HIGH_CARD_RANK + 1
+        const val MAX_PAIR_RANK: Int = MIN_PAIR_RANK + NUM_PAIR_RANKS - 1
+        const val NUM_TWO_PAIR_RANKS = 858
+        const val MIN_TWO_PAIR_RANK: Int = MAX_PAIR_RANK + 1
+        const val MAX_TWO_PAIR_RANK: Int = MIN_TWO_PAIR_RANK + NUM_TWO_PAIR_RANKS - 1
+        const val NUM_THREE_OF_A_KIND_RANKS: Int = 858
+        const val MIN_THREE_OF_A_KIND_RANK: Int = MAX_TWO_PAIR_RANK + 1
+        const val MAX_THREE_OF_A_KIND_RANK: Int = MIN_THREE_OF_A_KIND_RANK + NUM_THREE_OF_A_KIND_RANKS - 1
+        const val NUM_STRAIGHT_RANKS: Int = 10
+        const val MIN_STRAIGHT_RANK: Int = MAX_THREE_OF_A_KIND_RANK + 1
+        const val MAX_STRAIGHT_RANK: Int = MIN_STRAIGHT_RANK + NUM_STRAIGHT_RANKS - 1
+        const val NUM_FLUSH_RANKS: Int = 1277
+        const val MIN_FLUSH_RANK: Int = MAX_STRAIGHT_RANK + 1
+        const val MAX_FLUSH_RANK: Int = MIN_FLUSH_RANK + NUM_FLUSH_RANKS - 1
+        const val NUM_FULL_HOUSE_RANKS: Int = 156
+        const val MIN_FULL_HOUSE_RANK: Int = MAX_FLUSH_RANK + 1
+        const val MAX_FULL_HOUSE_RANK: Int = MIN_FULL_HOUSE_RANK + NUM_FULL_HOUSE_RANKS - 1
+        const val NUM_FOUR_OF_A_KIND_RANKS = 156
+        const val MIN_FOUR_OF_A_KIND_RANK: Int = MAX_FULL_HOUSE_RANK + 1
+        const val MAX_FOUR_OF_A_KIND_RANK: Int = MIN_FOUR_OF_A_KIND_RANK + NUM_FOUR_OF_A_KIND_RANKS - 1
+        const val NUM_STRAIGHT_FLUSH_RANKS: Int = 10
+        const val MIN_STRAIGHT_FLUSH_RANK: Int = MAX_FOUR_OF_A_KIND_RANK + 1
+        const val MAX_STRAIGHT_FLUSH_RANK: Int = MIN_STRAIGHT_FLUSH_RANK + NUM_STRAIGHT_FLUSH_RANKS - 1
 
         private val straightRelativeRankMap = mutableMapOf<String, Int>()
         private val fourOfAKindAndFullHouseRelativeRankMap = mutableMapOf<String, Int>()
@@ -379,7 +379,7 @@ class PokerHand(val cards: ArrayList<Card>) {
             straightRelativeRankMap["8 7 6 5 4"] = rank--
             straightRelativeRankMap["7 6 5 4 3"] = rank--
             straightRelativeRankMap["6 5 4 3 2"] = rank--
-            straightRelativeRankMap["5 4 3 2 1"] = rank--
+            straightRelativeRankMap["5 4 3 2 1"] = rank
         }
 
         private fun buildFourOfAKindAndFullHouseRelativeRankMap() {
@@ -391,7 +391,7 @@ class PokerHand(val cards: ArrayList<Card>) {
                         continue
                     }
 
-                    val key: String = arrayListOf<Int>(
+                    val key: String = arrayListOf(
                         fourOrThreeOfAKindRank,
                         kickerOrPairRank
                     ).joinToString(" ")
@@ -414,7 +414,7 @@ class PokerHand(val cards: ArrayList<Card>) {
                             continue
                         }
 
-                        val key: String = arrayListOf<Int>(
+                        val key: String = arrayListOf(
                             threeOfAKindRank,
                             topKickerRank,
                             bottomKickerRank
@@ -439,7 +439,7 @@ class PokerHand(val cards: ArrayList<Card>) {
                             continue
                         }
 
-                        val key: String = arrayListOf<Int>(
+                        val key: String = arrayListOf(
                             topPairRank,
                             bottomPairRank,
                             kickerRank
@@ -468,7 +468,7 @@ class PokerHand(val cards: ArrayList<Card>) {
                                 continue
                             }
 
-                            val key: String = arrayListOf<Int>(
+                            val key: String = arrayListOf(
                                 pairRank,
                                 topKickerRank,
                                 middleKickerRank,
@@ -491,7 +491,7 @@ class PokerHand(val cards: ArrayList<Card>) {
                     for (thirdHighestCardRank in secondHighestCardRank - 1 downTo 4) {
                         for (fourthHighestCardRank in thirdHighestCardRank - 1 downTo 3) {
                             for (fifthHighestCardRank in fourthHighestCardRank - 1 downTo 2) {
-                                val key: String = arrayListOf<Int>(
+                                val key: String = arrayListOf(
                                     highCardRank,
                                     secondHighestCardRank,
                                     thirdHighestCardRank,
@@ -499,7 +499,7 @@ class PokerHand(val cards: ArrayList<Card>) {
                                     fifthHighestCardRank
                                 ).joinToString(" ")
 
-                                if ((highCardRank-fifthHighestCardRank == 4) || key.equals("14 5 4 3 2")){
+                                if ((highCardRank-fifthHighestCardRank == 4) || (key == "14 5 4 3 2")){
                                     // exclude straights
                                     continue
                                 }
