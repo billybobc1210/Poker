@@ -350,7 +350,7 @@ class PokerHand(val cards: ArrayList<Card>) {
         private val pairRelativeRankMap = mutableMapOf<String, Int>()
         private val highCardRelativeRankMap = mutableMapOf<String, Int>()
 
-        private fun buildFourOfAKindAndFullHouseRankMap() {
+        private fun buildFourOfAKindAndFullHouseRelativeRankMap() {
             var rank: Int = NUM_FOUR_OF_A_KIND_RANKS - 1
 
             for (fourOrThreeOfAKindRank in 14 downTo 2) {
@@ -370,7 +370,7 @@ class PokerHand(val cards: ArrayList<Card>) {
             }
         }
 
-        private fun buildThreeOfAKindRankMap() {
+        private fun buildThreeOfAKindRelativeRankMap() {
             var rank: Int = NUM_THREE_OF_A_KIND_RANKS - 1
 
             for (threeOfAKindRank in 14 downTo 2) {
@@ -395,7 +395,7 @@ class PokerHand(val cards: ArrayList<Card>) {
             }
         }
 
-        private fun buildTwoPairRankMap() {
+        private fun buildTwoPairRelativeRankMap() {
             var rank: Int = NUM_TWO_PAIR_RANKS - 1
 
             for (topPairRank in 14 downTo 3) {
@@ -420,7 +420,7 @@ class PokerHand(val cards: ArrayList<Card>) {
             }
         }
 
-        private fun buildPairRankMap() {
+        private fun buildPairRelativeRankMap() {
             var rank: Int = NUM_PAIR_RANKS - 1
 
             for (pairRank in 14 downTo 2) {
@@ -451,7 +451,7 @@ class PokerHand(val cards: ArrayList<Card>) {
             }
         }
 
-        private fun buildHighCardRankMap() {
+        private fun buildHighCardRelativeRankMap() {
             var rank: Int = NUM_FLUSH_RANKS - 1
 
             for (highCardRank in 14 downTo 6) {
@@ -482,11 +482,11 @@ class PokerHand(val cards: ArrayList<Card>) {
         }
 
         init {
-            buildFourOfAKindAndFullHouseRankMap()
-            buildThreeOfAKindRankMap()
-            buildTwoPairRankMap()
-            buildPairRankMap()
-            buildHighCardRankMap()
+            buildFourOfAKindAndFullHouseRelativeRankMap()
+            buildThreeOfAKindRelativeRankMap()
+            buildTwoPairRelativeRankMap()
+            buildPairRelativeRankMap()
+            buildHighCardRelativeRankMap()
         }
     }
 }
