@@ -39,49 +39,49 @@ class PokerHand(val cards: ArrayList<Card>) {
     private fun calculateRank(): Int {
         var result: Int = calculateStraightFlushRank()
 
-        if (result > 0) {
+        if (result >= 0) {
             return result
         }
 
         result = calculateFourOfAKindRank()
 
-        if (result > 0) {
+        if (result >= 0) {
             return result
         }
 
         result = calculateFullHouseRank()
 
-        if (result > 0) {
+        if (result >= 0) {
             return result
         }
 
         result = calculateFlushRank()
 
-        if (result > 0) {
+        if (result >= 0) {
             return result
         }
 
         result = calculateStraightRank()
 
-        if (result > 0) {
+        if (result >= 0) {
             return result
         }
 
         result = calculateThreeOfAKindRank()
 
-        if (result > 0) {
+        if (result >= 0) {
             return result
         }
 
         result = calculateTwoPairRank()
 
-        if (result > 0) {
+        if (result >= 0) {
             return result
         }
 
         result = calculatePairRank()
 
-        if (result > 0) {
+        if (result >= 0) {
             return result
         }
 
@@ -93,7 +93,7 @@ class PokerHand(val cards: ArrayList<Card>) {
             return MIN_STRAIGHT_FLUSH_RANK + relativeStraightRank()
         }
 
-        return 0
+        return -1
     }
 
     private fun calculateFourOfAKindRank(): Int {
@@ -116,10 +116,10 @@ class PokerHand(val cards: ArrayList<Card>) {
                 ).joinToString(" ")
 
                 return MIN_FOUR_OF_A_KIND_RANK + (fourOfAKindAndFullHouseRankMap[fourOfAKindRankMapKey] ?: 0)
-        }
+            }
         }
 
-        return 0
+        return -1
     }
 
     private fun calculateFullHouseRank(): Int {
@@ -145,7 +145,7 @@ class PokerHand(val cards: ArrayList<Card>) {
             }
         }
 
-        return 0
+        return -1
     }
 
     private fun calculateFlushRank(): Int {
@@ -155,7 +155,7 @@ class PokerHand(val cards: ArrayList<Card>) {
             return MIN_FLUSH_RANK + (highCardRankMap[key] ?: 0)
         }
 
-        return 0
+        return -1
     }
 
     private fun calculateStraightRank(): Int {
@@ -163,7 +163,7 @@ class PokerHand(val cards: ArrayList<Card>) {
             return MIN_STRAIGHT_RANK + relativeStraightRank()
         }
 
-        return 0
+        return -1
     }
 
     private fun calculateThreeOfAKindRank(): Int {
@@ -187,7 +187,7 @@ class PokerHand(val cards: ArrayList<Card>) {
             }
         }
 
-        return 0
+        return -1
     }
 
     private fun calculateTwoPairRank(): Int {
@@ -211,7 +211,7 @@ class PokerHand(val cards: ArrayList<Card>) {
             }
         }
 
-        return 0
+        return -1
     }
 
     private fun calculatePairRank(): Int {
@@ -235,7 +235,7 @@ class PokerHand(val cards: ArrayList<Card>) {
             }
         }
 
-        return 0
+        return -1
     }
 
     private fun calculateHighCardRank(): Int {
