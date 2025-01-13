@@ -1,5 +1,5 @@
 fun main() {
-    val deck: StandardDeck = StandardDeck()
+    val deck = StandardDeck()
     for (i in 1..1000000) {
         deck.shuffle()
 
@@ -19,11 +19,11 @@ fun main() {
 
         if ((rank1 > 7000) && (rank2 > 7000)) {
             if (rank1 > rank2) {
-                println(hand1.toString() + " ($rank1) > " + hand2.toString() + " ($rank2)")
+                println("$hand1 ($rank1) > $hand2 ($rank2)")
             } else if (rank1 < rank2) {
-                println(hand2.toString() + " ($rank2) > " + hand1.toString() + " ($rank1)")
+                println("$hand2 ($rank2) > $hand1 ($rank1)")
             } else {
-                println(hand1.toString() + " ($rank1) == " + hand2.toString() + " ($rank2)")
+                println("$hand1 ($rank1) == $hand2 ($rank2)")
             }
         }
     }
