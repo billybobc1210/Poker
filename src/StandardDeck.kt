@@ -1,5 +1,5 @@
 class StandardDeck {
-    val cards: ArrayList<Card> = arrayListOf(
+    private val cards: ArrayList<Card> = arrayListOf(
         Card(Rank.TWO, Suit.CLUBS),
         Card(Rank.THREE, Suit.CLUBS),
         Card(Rank.FOUR, Suit.CLUBS),
@@ -53,19 +53,19 @@ class StandardDeck {
         Card(Rank.KING, Suit.SPADES),
         Card(Rank.ACE, Suit.SPADES),
     )
-    var topCardIndex = 0;
+    private var topCardIndex = 0
 
     fun shuffle() {
-        topCardIndex = 0;
+        topCardIndex = 0
         cards.forEachIndexed { i, card ->
-            var r = (0..51).random()
+            val r = (0..51).random()
             cards[i] = cards[r]
             cards[r] = card
         }
     }
 
     fun cardsRemaining(): Int {
-        return cards.size - this.topCardIndex;
+        return cards.size - this.topCardIndex
     }
 
     fun dealTopCard(): Card {
@@ -74,11 +74,5 @@ class StandardDeck {
 
     fun peekAtCard(i: Int): Card {
         return cards[i]
-    }
-
-    fun display() {
-        cards.forEachIndexed { i, card ->
-            println(card)
-        }
     }
 }
