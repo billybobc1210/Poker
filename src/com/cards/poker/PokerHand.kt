@@ -397,7 +397,7 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
 
             for (threeOfAKindRank in PokerCard.getHighValue(Rank.ACE) downTo PokerCard.getHighValue(Rank.TWO)) {
                 for (topKickerRank in PokerCard.getHighValue(Rank.ACE) downTo PokerCard.getHighValue(Rank.THREE)) {
-                    for (bottomKickerRank in topKickerRank - 1 downTo 2) {
+                    for (bottomKickerRank in topKickerRank - 1 downTo PokerCard.getHighValue(Rank.TWO)) {
                         if ((threeOfAKindRank == topKickerRank) ||
                             (threeOfAKindRank == bottomKickerRank) ||
                             (topKickerRank == bottomKickerRank)) {
