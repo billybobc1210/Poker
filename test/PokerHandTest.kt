@@ -178,7 +178,7 @@ class PokerHandTest {
     }
 
     @Test
-    fun fourOfAKindTEst() {
+    fun fourOfAKindTest() {
         var cards = arrayListOf<Card>(
             Card(Rank.ACE, Suit.SPADES),
             Card(Rank.ACE, Suit.CLUBS),
