@@ -6,17 +6,9 @@ import com.cards.StandardCard
 data class PokerCard(val standardCard: StandardCard) {
     val rank get() = standardCard.rank
     val suit get() = standardCard.suit
-    val highValue get() = calculateHighValue()
-    val lowValue get() = calculateLowValue()
+    val highValue get() = getHighValue(rank)
+    val lowValue get() = getLowValue(rank)
     val abbreviation get() = standardCard.abbreviation
-
-    private fun calculateHighValue(): Int {
-        return getHighValue(rank)
-    }
-
-    private fun calculateLowValue(): Int {
-        return getLowValue(rank)
-    }
 
     override fun toString(): String {
         return standardCard.toString()
