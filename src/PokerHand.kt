@@ -367,21 +367,6 @@ class PokerHand(private val cards: ArrayList<Card>) {
         private val pairRelativeRankMap = mutableMapOf<String, Int>()
         private val highCardRelativeRankMap = mutableMapOf<String, Int>()
 
-        private fun buildStraightRelativeRankMap() {
-            var rank: Int = NUM_STRAIGHT_RANKS - 1
-
-            straightRelativeRankMap["14 13 12 11 10"] = rank--
-            straightRelativeRankMap["13 12 11 10 9"] = rank--
-            straightRelativeRankMap["12 11 10 9 8"] = rank--
-            straightRelativeRankMap["11 10 9 8 7"] = rank--
-            straightRelativeRankMap["10 9 8 7 6"] = rank--
-            straightRelativeRankMap["9 8 7 6 5"] = rank--
-            straightRelativeRankMap["8 7 6 5 4"] = rank--
-            straightRelativeRankMap["7 6 5 4 3"] = rank--
-            straightRelativeRankMap["6 5 4 3 2"] = rank--
-            straightRelativeRankMap["5 4 3 2 1"] = rank
-        }
-
         private fun buildFourOfAKindAndFullHouseRelativeRankMap() {
             var rank: Int = NUM_FOUR_OF_A_KIND_RANKS - 1
 
@@ -483,8 +468,9 @@ class PokerHand(private val cards: ArrayList<Card>) {
             }
         }
 
-        private fun buildHighCardRelativeRankMap() {
-            var rank: Int = NUM_HIGH_CARD_RANKS - 1
+        private fun buildHighCardAndStraightRelativeRankMaps() {
+            var highKardRank: Int = NUM_HIGH_CARD_RANKS - 1
+            var straightRank: Int = NUM_STRAIGHT_RANKS - 1
 
             for (highCardRank in 14 downTo 6) {
                 for (secondHighestCardRank in highCardRank - 1 downTo 5) {
@@ -499,27 +485,26 @@ class PokerHand(private val cards: ArrayList<Card>) {
                                     fifthHighestCardRank
                                 ).joinToString(" ")
 
-                                if ((highCardRank-fifthHighestCardRank == 4) || (key == "14 5 4 3 2")){
-                                    // exclude straights
-                                    continue
+                                if (highCardRank - fifthHighestCardRank == 4) {
+                                    straightRelativeRankMap[key] = straightRank--
+                                } else if (key != "14 5 4 3 2") {
+                                    highCardRelativeRankMap[key] = highKardRank--
                                 }
-
-//                                println("$key -> $rank")
-                                highCardRelativeRankMap[key] = rank--
                             }
                         }
                     }
                 }
             }
+
+            straightRelativeRankMap["5 4 3 2 1"] = straightRank
         }
 
         init {
-            buildStraightRelativeRankMap()
             buildFourOfAKindAndFullHouseRelativeRankMap()
             buildThreeOfAKindRelativeRankMap()
             buildTwoPairRelativeRankMap()
             buildPairRelativeRankMap()
-            buildHighCardRelativeRankMap()
+            buildHighCardAndStraightRelativeRankMaps()
         }
     }
 }
