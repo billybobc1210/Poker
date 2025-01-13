@@ -10,7 +10,7 @@ Ac Ah 8s 7h 2c
 
 and 
 
-As Ah 8c 7c 2d
+As Ad 8c 7c 2d
 
 are of equal rank as a standard five-card poker hand.  In fact, all of those 
 2598960 hands can be reduced to 7462 distinct poker rankings.  
