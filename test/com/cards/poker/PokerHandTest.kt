@@ -11,7 +11,7 @@ class PokerHandTest {
     @Test
     fun tooManyCardsTest() {
         var validHand = true
-        val cards = arrayListOf<PokerCard>(
+        val cards = arrayListOf(
             PokerCard(StandardCard(Rank.ACE, Suit.SPADES)),
             PokerCard(StandardCard(Rank.KING, Suit.SPADES)),
             PokerCard(StandardCard(Rank.QUEEN, Suit.SPADES)),
@@ -21,7 +21,7 @@ class PokerHandTest {
         )
 
         try {
-            var pokerHand = PokerHand(cards)
+            PokerHand(cards)
         } catch (e: Exception) {
             validHand = false
         }
@@ -40,7 +40,7 @@ class PokerHandTest {
         )
 
         try {
-            var pokerHand = PokerHand(cards)
+            PokerHand(cards)
         } catch (e: Exception) {
             validHand = false
         }
@@ -60,7 +60,7 @@ class PokerHandTest {
         )
 
         try {
-            var pokerHand = PokerHand(cards)
+            PokerHand(cards)
         } catch (e: Exception) {
             validHand = false
         }

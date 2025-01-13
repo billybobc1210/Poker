@@ -474,8 +474,8 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
         }
 
         private fun buildHighCardAndStraightRelativeRankMaps() {
-            var highKardRank: Int = NUM_HIGH_CARD_RANKS - 1
-            var straightRank: Int = NUM_STRAIGHT_RANKS - 1
+            var highCardRelativeRank: Int = NUM_HIGH_CARD_RANKS - 1
+            var straightRelativeRank: Int = NUM_STRAIGHT_RANKS - 1
 
             for (highCardRank in 14 downTo 6) {
                 for (secondHighestCardRank in highCardRank - 1 downTo 5) {
@@ -491,9 +491,9 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
                                 ).joinToString(" ")
 
                                 if (highCardRank - fifthHighestCardRank == 4) {
-                                    straightRelativeRankMap[key] = straightRank--
+                                    straightRelativeRankMap[key] = straightRelativeRank--
                                 } else if (key != "14 5 4 3 2") {
-                                    highCardRelativeRankMap[key] = highKardRank--
+                                    highCardRelativeRankMap[key] = highCardRelativeRank--
                                 }
                             }
                         }
@@ -501,7 +501,7 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
                 }
             }
 
-            straightRelativeRankMap["5 4 3 2 1"] = straightRank
+            straightRelativeRankMap["5 4 3 2 1"] = straightRelativeRank
         }
 
         init {

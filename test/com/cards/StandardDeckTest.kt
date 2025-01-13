@@ -7,7 +7,7 @@ class StandardDeckTest {
     @Test
     fun shuffleTest() {
         val deck = StandardDeck()
-        deck.shuffle();
+        deck.shuffle()
         assertEquals(52, deck.cardsRemaining())
 
         val cardsDealt = mutableMapOf<String, Boolean?>()
@@ -15,12 +15,13 @@ class StandardDeckTest {
         for (i in 0..51) {
             val card = deck.dealTopCard()
             assertEquals(51-i, deck.cardsRemaining())
-            cardsDealt.put(card.toString(), true)
+            cardsDealt["$card"] = true
         }
 
         Rank.allRanks().forEach { rank ->
             Suit.allSuits().forEach { suit ->
-                val cardFound = cardsDealt.get(StandardCard(rank, suit).toString()) ?: false
+                val card = StandardCard(rank, suit)
+                val cardFound = cardsDealt["$card"] ?: false
                 assertTrue(cardFound)
             }
         }
