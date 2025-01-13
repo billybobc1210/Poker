@@ -1,3 +1,8 @@
+package com.cards.poker
+
+import com.cards.Rank
+import com.cards.StandardCard
+
 data class PokerCard(val standardCard: StandardCard) {
     val rank get() = standardCard.rank
     val suit get() = standardCard.suit

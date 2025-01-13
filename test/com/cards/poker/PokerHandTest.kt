@@ -1,3 +1,8 @@
+package com.cards.poker
+
+import com.cards.Rank
+import com.cards.StandardCard
+import com.cards.Suit
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Test
