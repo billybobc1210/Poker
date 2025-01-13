@@ -18,6 +18,10 @@ data class PokerCard(val standardCard: StandardCard) {
         return getLowValue(rank)
     }
 
+    override fun toString(): String {
+        return standardCard.toString()
+    }
+
     companion object {
         fun getHighValue(rank: Rank): Int {
             return when (rank) {
