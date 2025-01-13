@@ -477,6 +477,22 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
             var highCardRelativeRank: Int = NUM_HIGH_CARD_RANKS - 1
             var straightRelativeRank: Int = NUM_STRAIGHT_RANKS - 1
 
+            val falseFiveHighStraightRelativeRankKey = arrayListOf(
+                PokerCard.getHighValue(Rank.ACE),
+                PokerCard.getHighValue(Rank.FIVE),
+                PokerCard.getHighValue(Rank.FOUR),
+                PokerCard.getHighValue(Rank.THREE),
+                PokerCard.getHighValue(Rank.TWO),
+            ).joinToString(" ")
+
+            val trueFiveHighStraightRelativeRankKey = arrayListOf(
+                PokerCard.getHighValue(Rank.FIVE),
+                PokerCard.getHighValue(Rank.FOUR),
+                PokerCard.getHighValue(Rank.THREE),
+                PokerCard.getHighValue(Rank.TWO),
+                PokerCard.getLowValue(Rank.ACE),
+            ).joinToString(" ")
+
             for (highCardRank in PokerCard.getHighValue(Rank.ACE) downTo PokerCard.getHighValue(Rank.SIX)) {
                 for (secondHighestCardRank in highCardRank - 1 downTo PokerCard.getHighValue(Rank.FIVE)) {
                     for (thirdHighestCardRank in secondHighestCardRank - 1 downTo PokerCard.getHighValue(Rank.FOUR)) {
@@ -492,7 +508,7 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
 
                                 if (highCardRank - fifthHighestCardRank == 4) {
                                     straightRelativeRankMap[key] = straightRelativeRank--
-                                } else if (key != "14 5 4 3 2") {
+                                } else if (key != falseFiveHighStraightRelativeRankKey) {
                                     highCardRelativeRankMap[key] = highCardRelativeRank--
                                 }
                             }
@@ -501,7 +517,7 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
                 }
             }
 
-            straightRelativeRankMap["5 4 3 2 1"] = straightRelativeRank
+            straightRelativeRankMap[trueFiveHighStraightRelativeRankKey] = straightRelativeRank
         }
 
         init {
