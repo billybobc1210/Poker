@@ -6,13 +6,13 @@ class PokerHandTest {
     @Test
     fun tooManyCardsTest() {
         var validHand = true
-        val cards = arrayListOf<Card>(
-            Card(Rank.ACE, Suit.SPADES),
-            Card(Rank.KING, Suit.SPADES),
-            Card(Rank.QUEEN, Suit.SPADES),
-            Card(Rank.JACK, Suit.SPADES),
-            Card(Rank.TEN, Suit.SPADES),
-            Card(Rank.NINE, Suit.DIAMONDS),
+        val cards = arrayListOf<PokerCard>(
+            PokerCard(StandardCard(Rank.ACE, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.KING, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.QUEEN, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.JACK, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.TEN, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.NINE, Suit.DIAMONDS)),
         )
 
         try {
@@ -27,11 +27,11 @@ class PokerHandTest {
     @Test
     fun tooFewCardsTest() {
         var validHand = true
-        val cards = arrayListOf<Card>(
-            Card(Rank.QUEEN, Suit.SPADES),
-            Card(Rank.JACK, Suit.SPADES),
-            Card(Rank.TEN, Suit.SPADES),
-            Card(Rank.NINE, Suit.DIAMONDS),
+        val cards = arrayListOf(
+            PokerCard(StandardCard(Rank.QUEEN, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.JACK, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.TEN, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.NINE, Suit.DIAMONDS)),
         )
 
         try {
@@ -46,12 +46,12 @@ class PokerHandTest {
     @Test
     fun duplicateCardsTest() {
         var validHand = true
-        val cards = arrayListOf<Card>(
-            Card(Rank.QUEEN, Suit.SPADES),
-            Card(Rank.QUEEN, Suit.SPADES),
-            Card(Rank.JACK, Suit.SPADES),
-            Card(Rank.TEN, Suit.SPADES),
-            Card(Rank.NINE, Suit.DIAMONDS),
+        val cards = arrayListOf(
+            PokerCard(StandardCard(Rank.QUEEN, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.QUEEN, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.JACK, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.TEN, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.NINE, Suit.DIAMONDS)),
         )
 
         try {
@@ -65,111 +65,111 @@ class PokerHandTest {
 
     @Test
     fun straightFlushTest() {
-        var cards = arrayListOf<Card>(
-            Card(Rank.ACE, Suit.SPADES),
-            Card(Rank.KING, Suit.SPADES),
-            Card(Rank.QUEEN, Suit.SPADES),
-            Card(Rank.JACK, Suit.SPADES),
-            Card(Rank.TEN, Suit.SPADES),
+        var cards = arrayListOf(
+            PokerCard(StandardCard(Rank.ACE, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.KING, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.QUEEN, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.JACK, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.TEN, Suit.SPADES)),
         )
         var pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MAX_STRAIGHT_FLUSH_RANK, pokerHand.rank)
         assertEquals(PokerHand.MIN_STRAIGHT_FLUSH_RANK + 9, pokerHand.rank)
 
-        cards = arrayListOf<Card>(
-            Card(Rank.KING, Suit.SPADES),
-            Card(Rank.QUEEN, Suit.SPADES),
-            Card(Rank.JACK, Suit.SPADES),
-            Card(Rank.TEN, Suit.SPADES),
-            Card(Rank.NINE, Suit.SPADES),
+        cards = arrayListOf(
+            PokerCard(StandardCard(Rank.KING, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.QUEEN, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.JACK, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.TEN, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.NINE, Suit.SPADES)),
         )
         pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MAX_STRAIGHT_FLUSH_RANK-1, pokerHand.rank)
         assertEquals(PokerHand.MIN_STRAIGHT_FLUSH_RANK+8, pokerHand.rank)
 
-        cards = arrayListOf<Card>(
-            Card(Rank.QUEEN, Suit.SPADES),
-            Card(Rank.JACK, Suit.SPADES),
-            Card(Rank.TEN, Suit.SPADES),
-            Card(Rank.NINE, Suit.SPADES),
-            Card(Rank.EIGHT, Suit.SPADES),
+        cards = arrayListOf(
+            PokerCard(StandardCard(Rank.QUEEN, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.JACK, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.TEN, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.NINE, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.EIGHT, Suit.SPADES)),
         )
         pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MAX_STRAIGHT_FLUSH_RANK-2, pokerHand.rank)
         assertEquals(PokerHand.MIN_STRAIGHT_FLUSH_RANK+7, pokerHand.rank)
 
-        cards = arrayListOf<Card>(
-            Card(Rank.JACK, Suit.SPADES),
-            Card(Rank.TEN, Suit.SPADES),
-            Card(Rank.NINE, Suit.SPADES),
-            Card(Rank.EIGHT, Suit.SPADES),
-            Card(Rank.SEVEN, Suit.SPADES),
+        cards = arrayListOf(
+            PokerCard(StandardCard(Rank.JACK, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.TEN, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.NINE, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.EIGHT, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.SEVEN, Suit.SPADES)),
         )
         pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MAX_STRAIGHT_FLUSH_RANK-3, pokerHand.rank)
         assertEquals(PokerHand.MIN_STRAIGHT_FLUSH_RANK+6, pokerHand.rank)
 
-        cards = arrayListOf<Card>(
-            Card(Rank.TEN, Suit.SPADES),
-            Card(Rank.NINE, Suit.SPADES),
-            Card(Rank.EIGHT, Suit.SPADES),
-            Card(Rank.SEVEN, Suit.SPADES),
-            Card(Rank.SIX, Suit.SPADES),
+        cards = arrayListOf(
+            PokerCard(StandardCard(Rank.TEN, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.NINE, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.EIGHT, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.SEVEN, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.SIX, Suit.SPADES)),
         )
         pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MAX_STRAIGHT_FLUSH_RANK-4, pokerHand.rank)
         assertEquals(PokerHand.MIN_STRAIGHT_FLUSH_RANK+5, pokerHand.rank)
 
-        cards = arrayListOf<Card>(
-            Card(Rank.NINE, Suit.SPADES),
-            Card(Rank.EIGHT, Suit.SPADES),
-            Card(Rank.SEVEN, Suit.SPADES),
-            Card(Rank.SIX, Suit.SPADES),
-            Card(Rank.FIVE, Suit.SPADES),
+        cards = arrayListOf(
+            PokerCard(StandardCard(Rank.NINE, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.EIGHT, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.SEVEN, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.SIX, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.FIVE, Suit.SPADES)),
         )
         pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MAX_STRAIGHT_FLUSH_RANK-5, pokerHand.rank)
         assertEquals(PokerHand.MIN_STRAIGHT_FLUSH_RANK+4, pokerHand.rank)
 
-        cards = arrayListOf<Card>(
-            Card(Rank.EIGHT, Suit.SPADES),
-            Card(Rank.SEVEN, Suit.SPADES),
-            Card(Rank.SIX, Suit.SPADES),
-            Card(Rank.FIVE, Suit.SPADES),
-            Card(Rank.FOUR, Suit.SPADES),
+        cards = arrayListOf(
+            PokerCard(StandardCard(Rank.EIGHT, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.SEVEN, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.SIX, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.FIVE, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.FOUR, Suit.SPADES)),
         )
         pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MAX_STRAIGHT_FLUSH_RANK-6, pokerHand.rank)
         assertEquals(PokerHand.MIN_STRAIGHT_FLUSH_RANK+3, pokerHand.rank)
 
-        cards = arrayListOf<Card>(
-            Card(Rank.SEVEN, Suit.SPADES),
-            Card(Rank.SIX, Suit.SPADES),
-            Card(Rank.FIVE, Suit.SPADES),
-            Card(Rank.FOUR, Suit.SPADES),
-            Card(Rank.THREE, Suit.SPADES),
+        cards = arrayListOf(
+            PokerCard(StandardCard(Rank.SEVEN, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.SIX, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.FIVE, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.FOUR, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.THREE, Suit.SPADES)),
         )
         pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MAX_STRAIGHT_FLUSH_RANK-7, pokerHand.rank)
         assertEquals(PokerHand.MIN_STRAIGHT_FLUSH_RANK+2, pokerHand.rank)
 
-        cards = arrayListOf<Card>(
-            Card(Rank.SIX, Suit.SPADES),
-            Card(Rank.FIVE, Suit.SPADES),
-            Card(Rank.FOUR, Suit.SPADES),
-            Card(Rank.THREE, Suit.SPADES),
-            Card(Rank.TWO, Suit.SPADES),
+        cards = arrayListOf(
+            PokerCard(StandardCard(Rank.SIX, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.FIVE, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.FOUR, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.THREE, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.TWO, Suit.SPADES)),
         )
         pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MAX_STRAIGHT_FLUSH_RANK-8, pokerHand.rank)
         assertEquals(PokerHand.MIN_STRAIGHT_FLUSH_RANK+1, pokerHand.rank)
 
-        cards = arrayListOf<Card>(
-            Card(Rank.FIVE, Suit.SPADES),
-            Card(Rank.FOUR, Suit.SPADES),
-            Card(Rank.THREE, Suit.SPADES),
-            Card(Rank.TWO, Suit.SPADES),
-            Card(Rank.ACE, Suit.SPADES),
+        cards = arrayListOf(
+            PokerCard(StandardCard(Rank.FIVE, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.FOUR, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.THREE, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.TWO, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.ACE, Suit.SPADES)),
         )
         pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MAX_STRAIGHT_FLUSH_RANK-9, pokerHand.rank)
@@ -179,43 +179,43 @@ class PokerHandTest {
 
     @Test
     fun fourOfAKindTest() {
-        var cards = arrayListOf<Card>(
-            Card(Rank.ACE, Suit.SPADES),
-            Card(Rank.ACE, Suit.CLUBS),
-            Card(Rank.ACE, Suit.HEARTS),
-            Card(Rank.ACE, Suit.DIAMONDS),
-            Card(Rank.KING, Suit.SPADES),
+        var cards = arrayListOf(
+            PokerCard(StandardCard(Rank.ACE, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.ACE, Suit.CLUBS)),
+            PokerCard(StandardCard(Rank.ACE, Suit.HEARTS)),
+            PokerCard(StandardCard(Rank.ACE, Suit.DIAMONDS)),
+            PokerCard(StandardCard(Rank.KING, Suit.SPADES)),
         )
         var pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MAX_FOUR_OF_A_KIND_RANK, pokerHand.rank)
         assertEquals(PokerHand.MIN_STRAIGHT_FLUSH_RANK-1, pokerHand.rank)
 
-        cards = arrayListOf<Card>(
-            Card(Rank.ACE, Suit.SPADES),
-            Card(Rank.ACE, Suit.CLUBS),
-            Card(Rank.ACE, Suit.HEARTS),
-            Card(Rank.ACE, Suit.DIAMONDS),
-            Card(Rank.QUEEN, Suit.SPADES),
+        cards = arrayListOf(
+            PokerCard(StandardCard(Rank.ACE, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.ACE, Suit.CLUBS)),
+            PokerCard(StandardCard(Rank.ACE, Suit.HEARTS)),
+            PokerCard(StandardCard(Rank.ACE, Suit.DIAMONDS)),
+            PokerCard(StandardCard(Rank.QUEEN, Suit.SPADES)),
         )
         pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MAX_FOUR_OF_A_KIND_RANK-1, pokerHand.rank)
 
-        cards = arrayListOf<Card>(
-            Card(Rank.TWO, Suit.SPADES),
-            Card(Rank.TWO, Suit.CLUBS),
-            Card(Rank.TWO, Suit.HEARTS),
-            Card(Rank.TWO, Suit.DIAMONDS),
-            Card(Rank.FOUR, Suit.SPADES),
+        cards = arrayListOf(
+            PokerCard(StandardCard(Rank.TWO, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.TWO, Suit.CLUBS)),
+            PokerCard(StandardCard(Rank.TWO, Suit.HEARTS)),
+            PokerCard(StandardCard(Rank.TWO, Suit.DIAMONDS)),
+            PokerCard(StandardCard(Rank.FOUR, Suit.SPADES)),
         )
         pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MIN_FOUR_OF_A_KIND_RANK+1, pokerHand.rank)
 
-        cards = arrayListOf<Card>(
-            Card(Rank.TWO, Suit.SPADES),
-            Card(Rank.TWO, Suit.CLUBS),
-            Card(Rank.TWO, Suit.HEARTS),
-            Card(Rank.TWO, Suit.DIAMONDS),
-            Card(Rank.THREE, Suit.SPADES),
+        cards = arrayListOf(
+            PokerCard(StandardCard(Rank.TWO, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.TWO, Suit.CLUBS)),
+            PokerCard(StandardCard(Rank.TWO, Suit.HEARTS)),
+            PokerCard(StandardCard(Rank.TWO, Suit.DIAMONDS)),
+            PokerCard(StandardCard(Rank.THREE, Suit.SPADES)),
         )
         pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MIN_FOUR_OF_A_KIND_RANK, pokerHand.rank)
@@ -224,43 +224,43 @@ class PokerHandTest {
 
     @Test
     fun fullHouseTest() {
-        var cards = arrayListOf<Card>(
-            Card(Rank.ACE, Suit.SPADES),
-            Card(Rank.ACE, Suit.CLUBS),
-            Card(Rank.ACE, Suit.HEARTS),
-            Card(Rank.KING, Suit.DIAMONDS),
-            Card(Rank.KING, Suit.SPADES),
+        var cards = arrayListOf(
+            PokerCard(StandardCard(Rank.ACE, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.ACE, Suit.CLUBS)),
+            PokerCard(StandardCard(Rank.ACE, Suit.HEARTS)),
+            PokerCard(StandardCard(Rank.KING, Suit.DIAMONDS)),
+            PokerCard(StandardCard(Rank.KING, Suit.SPADES)),
         )
         var pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MAX_FULL_HOUSE_RANK, pokerHand.rank)
         assertEquals(PokerHand.MIN_FOUR_OF_A_KIND_RANK-1, pokerHand.rank)
 
-        cards = arrayListOf<Card>(
-            Card(Rank.ACE, Suit.SPADES),
-            Card(Rank.ACE, Suit.CLUBS),
-            Card(Rank.ACE, Suit.HEARTS),
-            Card(Rank.QUEEN, Suit.DIAMONDS),
-            Card(Rank.QUEEN, Suit.SPADES),
+        cards = arrayListOf(
+            PokerCard(StandardCard(Rank.ACE, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.ACE, Suit.CLUBS)),
+            PokerCard(StandardCard(Rank.ACE, Suit.HEARTS)),
+            PokerCard(StandardCard(Rank.QUEEN, Suit.DIAMONDS)),
+            PokerCard(StandardCard(Rank.QUEEN, Suit.SPADES)),
         )
         pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MAX_FULL_HOUSE_RANK-1, pokerHand.rank)
 
-        cards = arrayListOf<Card>(
-            Card(Rank.TWO, Suit.SPADES),
-            Card(Rank.TWO, Suit.CLUBS),
-            Card(Rank.TWO, Suit.HEARTS),
-            Card(Rank.FOUR, Suit.DIAMONDS),
-            Card(Rank.FOUR, Suit.SPADES),
+        cards = arrayListOf(
+            PokerCard(StandardCard(Rank.TWO, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.TWO, Suit.CLUBS)),
+            PokerCard(StandardCard(Rank.TWO, Suit.HEARTS)),
+            PokerCard(StandardCard(Rank.FOUR, Suit.DIAMONDS)),
+            PokerCard(StandardCard(Rank.FOUR, Suit.SPADES)),
         )
         pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MIN_FULL_HOUSE_RANK+1, pokerHand.rank)
 
-        cards = arrayListOf<Card>(
-            Card(Rank.TWO, Suit.SPADES),
-            Card(Rank.TWO, Suit.CLUBS),
-            Card(Rank.TWO, Suit.HEARTS),
-            Card(Rank.THREE, Suit.DIAMONDS),
-            Card(Rank.THREE, Suit.SPADES),
+        cards = arrayListOf(
+            PokerCard(StandardCard(Rank.TWO, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.TWO, Suit.CLUBS)),
+            PokerCard(StandardCard(Rank.TWO, Suit.HEARTS)),
+            PokerCard(StandardCard(Rank.THREE, Suit.DIAMONDS)),
+            PokerCard(StandardCard(Rank.THREE, Suit.SPADES)),
         )
         pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MIN_FULL_HOUSE_RANK, pokerHand.rank)
@@ -269,35 +269,35 @@ class PokerHandTest {
 
     @Test
     fun flushTest() {
-        var cards = arrayListOf<Card>(
-            Card(Rank.ACE, Suit.SPADES),
-            Card(Rank.KING, Suit.SPADES),
-            Card(Rank.QUEEN, Suit.SPADES),
-            Card(Rank.JACK, Suit.SPADES),
-            Card(Rank.NINE, Suit.SPADES),
+        var cards = arrayListOf(
+            PokerCard(StandardCard(Rank.ACE, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.KING, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.QUEEN, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.JACK, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.NINE, Suit.SPADES)),
         )
 
         var pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MAX_FLUSH_RANK, pokerHand.rank)
         assertEquals(PokerHand.MIN_FULL_HOUSE_RANK-1, pokerHand.rank)
 
-        cards = arrayListOf<Card>(
-            Card(Rank.ACE, Suit.SPADES),
-            Card(Rank.KING, Suit.SPADES),
-            Card(Rank.QUEEN, Suit.SPADES),
-            Card(Rank.JACK, Suit.SPADES),
-            Card(Rank.EIGHT, Suit.SPADES),
+        cards = arrayListOf(
+            PokerCard(StandardCard(Rank.ACE, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.KING, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.QUEEN, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.JACK, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.EIGHT, Suit.SPADES)),
         )
 
         pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MAX_FLUSH_RANK-1, pokerHand.rank)
 
-        cards = arrayListOf<Card>(
-            Card(Rank.SEVEN, Suit.SPADES),
-            Card(Rank.FIVE, Suit.SPADES),
-            Card(Rank.FOUR, Suit.SPADES),
-            Card(Rank.THREE, Suit.SPADES),
-            Card(Rank.TWO, Suit.SPADES),
+        cards = arrayListOf(
+            PokerCard(StandardCard(Rank.SEVEN, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.FIVE, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.FOUR, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.THREE, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.TWO, Suit.SPADES)),
         )
 
         pokerHand = PokerHand(cards)
@@ -307,46 +307,46 @@ class PokerHandTest {
 
     @Test
     fun straightTest() {
-        var cards = arrayListOf<Card>(
-            Card(Rank.ACE, Suit.SPADES),
-            Card(Rank.KING, Suit.DIAMONDS),
-            Card(Rank.QUEEN, Suit.CLUBS),
-            Card(Rank.JACK, Suit.DIAMONDS),
-            Card(Rank.TEN, Suit.SPADES),
+        var cards = arrayListOf(
+            PokerCard(StandardCard(Rank.ACE, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.KING, Suit.DIAMONDS)),
+            PokerCard(StandardCard(Rank.QUEEN, Suit.CLUBS)),
+            PokerCard(StandardCard(Rank.JACK, Suit.DIAMONDS)),
+            PokerCard(StandardCard(Rank.TEN, Suit.SPADES)),
         )
 
         var pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MAX_STRAIGHT_RANK, pokerHand.rank)
         assertEquals(PokerHand.MIN_FLUSH_RANK-1, pokerHand.rank)
 
-        cards = arrayListOf<Card>(
-            Card(Rank.KING, Suit.DIAMONDS),
-            Card(Rank.QUEEN, Suit.CLUBS),
-            Card(Rank.JACK, Suit.DIAMONDS),
-            Card(Rank.TEN, Suit.SPADES),
-            Card(Rank.NINE, Suit.SPADES),
+        cards = arrayListOf(
+            PokerCard(StandardCard(Rank.KING, Suit.DIAMONDS)),
+            PokerCard(StandardCard(Rank.QUEEN, Suit.CLUBS)),
+            PokerCard(StandardCard(Rank.JACK, Suit.DIAMONDS)),
+            PokerCard(StandardCard(Rank.TEN, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.NINE, Suit.SPADES)),
         )
 
         pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MAX_STRAIGHT_RANK-1, pokerHand.rank)
 
-        cards = arrayListOf<Card>(
-            Card(Rank.TWO, Suit.SPADES),
-            Card(Rank.FIVE, Suit.CLUBS),
-            Card(Rank.FOUR, Suit.DIAMONDS),
-            Card(Rank.SIX, Suit.DIAMONDS),
-            Card(Rank.THREE, Suit.SPADES),
+        cards = arrayListOf(
+            PokerCard(StandardCard(Rank.TWO, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.FIVE, Suit.CLUBS)),
+            PokerCard(StandardCard(Rank.FOUR, Suit.DIAMONDS)),
+            PokerCard(StandardCard(Rank.SIX, Suit.DIAMONDS)),
+            PokerCard(StandardCard(Rank.THREE, Suit.SPADES)),
         )
 
         pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MIN_STRAIGHT_RANK+1, pokerHand.rank)
 
-        cards = arrayListOf<Card>(
-            Card(Rank.TWO, Suit.SPADES),
-            Card(Rank.FIVE, Suit.CLUBS),
-            Card(Rank.FOUR, Suit.DIAMONDS),
-            Card(Rank.ACE, Suit.DIAMONDS),
-            Card(Rank.THREE, Suit.SPADES),
+        cards = arrayListOf(
+            PokerCard(StandardCard(Rank.TWO, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.FIVE, Suit.CLUBS)),
+            PokerCard(StandardCard(Rank.FOUR, Suit.DIAMONDS)),
+            PokerCard(StandardCard(Rank.ACE, Suit.DIAMONDS)),
+            PokerCard(StandardCard(Rank.THREE, Suit.SPADES)),
         )
 
         pokerHand = PokerHand(cards)
@@ -356,35 +356,35 @@ class PokerHandTest {
 
     @Test
     fun threeOfAKindTest() {
-        var cards = arrayListOf<Card>(
-            Card(Rank.QUEEN, Suit.SPADES),
-            Card(Rank.KING, Suit.DIAMONDS),
-            Card(Rank.ACE, Suit.DIAMONDS),
-            Card(Rank.ACE, Suit.CLUBS),
-            Card(Rank.ACE, Suit.SPADES),
+        var cards = arrayListOf(
+            PokerCard(StandardCard(Rank.QUEEN, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.KING, Suit.DIAMONDS)),
+            PokerCard(StandardCard(Rank.ACE, Suit.DIAMONDS)),
+            PokerCard(StandardCard(Rank.ACE, Suit.CLUBS)),
+            PokerCard(StandardCard(Rank.ACE, Suit.SPADES)),
         )
 
         var pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MAX_THREE_OF_A_KIND_RANK, pokerHand.rank)
         assertEquals(PokerHand.MIN_STRAIGHT_RANK-1, pokerHand.rank)
 
-        cards = arrayListOf<Card>(
-            Card(Rank.ACE, Suit.SPADES),
-            Card(Rank.ACE, Suit.DIAMONDS),
-            Card(Rank.ACE, Suit.CLUBS),
-            Card(Rank.KING, Suit.DIAMONDS),
-            Card(Rank.JACK, Suit.SPADES),
+        cards = arrayListOf(
+            PokerCard(StandardCard(Rank.ACE, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.ACE, Suit.DIAMONDS)),
+            PokerCard(StandardCard(Rank.ACE, Suit.CLUBS)),
+            PokerCard(StandardCard(Rank.KING, Suit.DIAMONDS)),
+            PokerCard(StandardCard(Rank.JACK, Suit.SPADES)),
         )
 
         pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MAX_THREE_OF_A_KIND_RANK-1, pokerHand.rank)
 
-        cards = arrayListOf<Card>(
-            Card(Rank.TWO, Suit.SPADES),
-            Card(Rank.TWO, Suit.DIAMONDS),
-            Card(Rank.TWO, Suit.CLUBS),
-            Card(Rank.THREE, Suit.DIAMONDS),
-            Card(Rank.FOUR, Suit.SPADES),
+        cards = arrayListOf(
+            PokerCard(StandardCard(Rank.TWO, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.TWO, Suit.DIAMONDS)),
+            PokerCard(StandardCard(Rank.TWO, Suit.CLUBS)),
+            PokerCard(StandardCard(Rank.THREE, Suit.DIAMONDS)),
+            PokerCard(StandardCard(Rank.FOUR, Suit.SPADES)),
         )
 
         pokerHand = PokerHand(cards)
@@ -394,35 +394,35 @@ class PokerHandTest {
 
     @Test
     fun twoPairTest() {
-        var cards = arrayListOf<Card>(
-            Card(Rank.ACE, Suit.SPADES),
-            Card(Rank.ACE, Suit.DIAMONDS),
-            Card(Rank.KING, Suit.CLUBS),
-            Card(Rank.KING, Suit.DIAMONDS),
-            Card(Rank.QUEEN, Suit.SPADES),
+        var cards = arrayListOf(
+            PokerCard(StandardCard(Rank.ACE, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.ACE, Suit.DIAMONDS)),
+            PokerCard(StandardCard(Rank.KING, Suit.CLUBS)),
+            PokerCard(StandardCard(Rank.KING, Suit.DIAMONDS)),
+            PokerCard(StandardCard(Rank.QUEEN, Suit.SPADES)),
         )
 
         var pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MAX_TWO_PAIR_RANK, pokerHand.rank)
         assertEquals(PokerHand.MIN_THREE_OF_A_KIND_RANK-1, pokerHand.rank)
 
-        cards = arrayListOf<Card>(
-            Card(Rank.JACK, Suit.SPADES),
-            Card(Rank.ACE, Suit.SPADES),
-            Card(Rank.KING, Suit.CLUBS),
-            Card(Rank.KING, Suit.DIAMONDS),
-            Card(Rank.ACE, Suit.DIAMONDS),
+        cards = arrayListOf(
+            PokerCard(StandardCard(Rank.JACK, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.ACE, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.KING, Suit.CLUBS)),
+            PokerCard(StandardCard(Rank.KING, Suit.DIAMONDS)),
+            PokerCard(StandardCard(Rank.ACE, Suit.DIAMONDS)),
         )
 
         pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MAX_TWO_PAIR_RANK-1, pokerHand.rank)
 
-        cards = arrayListOf<Card>(
-            Card(Rank.TWO, Suit.SPADES),
-            Card(Rank.TWO, Suit.DIAMONDS),
-            Card(Rank.THREE, Suit.CLUBS),
-            Card(Rank.THREE, Suit.DIAMONDS),
-            Card(Rank.FOUR, Suit.SPADES),
+        cards = arrayListOf(
+            PokerCard(StandardCard(Rank.TWO, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.TWO, Suit.DIAMONDS)),
+            PokerCard(StandardCard(Rank.THREE, Suit.CLUBS)),
+            PokerCard(StandardCard(Rank.THREE, Suit.DIAMONDS)),
+            PokerCard(StandardCard(Rank.FOUR, Suit.SPADES)),
         )
 
         pokerHand = PokerHand(cards)
@@ -432,46 +432,46 @@ class PokerHandTest {
 
     @Test
     fun pairTest() {
-        var cards = arrayListOf<Card>(
-            Card(Rank.QUEEN, Suit.DIAMONDS),
-            Card(Rank.ACE, Suit.SPADES),
-            Card(Rank.KING, Suit.CLUBS),
-            Card(Rank.JACK, Suit.SPADES),
-            Card(Rank.ACE, Suit.DIAMONDS),
+        var cards = arrayListOf(
+            PokerCard(StandardCard(Rank.QUEEN, Suit.DIAMONDS)),
+            PokerCard(StandardCard(Rank.ACE, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.KING, Suit.CLUBS)),
+            PokerCard(StandardCard(Rank.JACK, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.ACE, Suit.DIAMONDS)),
         )
 
         var pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MAX_PAIR_RANK, pokerHand.rank)
         assertEquals(PokerHand.MIN_TWO_PAIR_RANK-1, pokerHand.rank)
 
-        cards = arrayListOf<Card>(
-            Card(Rank.TEN, Suit.SPADES),
-            Card(Rank.ACE, Suit.DIAMONDS),
-            Card(Rank.KING, Suit.CLUBS),
-            Card(Rank.QUEEN, Suit.DIAMONDS),
-            Card(Rank.ACE, Suit.SPADES),
+        cards = arrayListOf(
+            PokerCard(StandardCard(Rank.TEN, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.ACE, Suit.DIAMONDS)),
+            PokerCard(StandardCard(Rank.KING, Suit.CLUBS)),
+            PokerCard(StandardCard(Rank.QUEEN, Suit.DIAMONDS)),
+            PokerCard(StandardCard(Rank.ACE, Suit.SPADES)),
         )
 
         pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MAX_PAIR_RANK - 1, pokerHand.rank)
 
-        cards = arrayListOf<Card>(
-            Card(Rank.SIX, Suit.DIAMONDS),
-            Card(Rank.TWO, Suit.SPADES),
-            Card(Rank.THREE, Suit.CLUBS),
-            Card(Rank.FOUR, Suit.SPADES),
-            Card(Rank.TWO, Suit.DIAMONDS),
+        cards = arrayListOf(
+            PokerCard(StandardCard(Rank.SIX, Suit.DIAMONDS)),
+            PokerCard(StandardCard(Rank.TWO, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.THREE, Suit.CLUBS)),
+            PokerCard(StandardCard(Rank.FOUR, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.TWO, Suit.DIAMONDS)),
         )
 
         pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MIN_PAIR_RANK + 1, pokerHand.rank)
 
-        cards = arrayListOf<Card>(
-            Card(Rank.FOUR, Suit.DIAMONDS),
-            Card(Rank.TWO, Suit.SPADES),
-            Card(Rank.THREE, Suit.CLUBS),
-            Card(Rank.FIVE, Suit.SPADES),
-            Card(Rank.TWO, Suit.DIAMONDS),
+        cards = arrayListOf(
+            PokerCard(StandardCard(Rank.FOUR, Suit.DIAMONDS)),
+            PokerCard(StandardCard(Rank.TWO, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.THREE, Suit.CLUBS)),
+            PokerCard(StandardCard(Rank.FIVE, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.TWO, Suit.DIAMONDS)),
         )
 
         pokerHand = PokerHand(cards)
@@ -481,35 +481,35 @@ class PokerHandTest {
 
     @Test
     fun highCardTest() {
-        var cards = arrayListOf<Card>(
-            Card(Rank.ACE, Suit.SPADES),
-            Card(Rank.KING, Suit.DIAMONDS),
-            Card(Rank.QUEEN, Suit.CLUBS),
-            Card(Rank.JACK, Suit.DIAMONDS),
-            Card(Rank.NINE, Suit.SPADES),
+        var cards = arrayListOf(
+            PokerCard(StandardCard(Rank.ACE, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.KING, Suit.DIAMONDS)),
+            PokerCard(StandardCard(Rank.QUEEN, Suit.CLUBS)),
+            PokerCard(StandardCard(Rank.JACK, Suit.DIAMONDS)),
+            PokerCard(StandardCard(Rank.NINE, Suit.SPADES)),
         )
 
         var pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MAX_HIGH_CARD_RANK, pokerHand.rank)
         assertEquals(PokerHand.MIN_PAIR_RANK-1, pokerHand.rank)
 
-        cards = arrayListOf<Card>(
-            Card(Rank.ACE, Suit.SPADES),
-            Card(Rank.KING, Suit.DIAMONDS),
-            Card(Rank.QUEEN, Suit.CLUBS),
-            Card(Rank.JACK, Suit.DIAMONDS),
-            Card(Rank.EIGHT, Suit.SPADES),
+        cards = arrayListOf(
+            PokerCard(StandardCard(Rank.ACE, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.KING, Suit.DIAMONDS)),
+            PokerCard(StandardCard(Rank.QUEEN, Suit.CLUBS)),
+            PokerCard(StandardCard(Rank.JACK, Suit.DIAMONDS)),
+            PokerCard(StandardCard(Rank.EIGHT, Suit.SPADES)),
         )
 
         pokerHand = PokerHand(cards)
         assertEquals(PokerHand.MAX_HIGH_CARD_RANK-1, pokerHand.rank)
 
-        cards = arrayListOf<Card>(
-            Card(Rank.TWO, Suit.SPADES),
-            Card(Rank.THREE, Suit.DIAMONDS),
-            Card(Rank.FOUR, Suit.CLUBS),
-            Card(Rank.FIVE, Suit.DIAMONDS),
-            Card(Rank.SEVEN, Suit.SPADES),
+        cards = arrayListOf(
+            PokerCard(StandardCard(Rank.TWO, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.THREE, Suit.DIAMONDS)),
+            PokerCard(StandardCard(Rank.FOUR, Suit.CLUBS)),
+            PokerCard(StandardCard(Rank.FIVE, Suit.DIAMONDS)),
+            PokerCard(StandardCard(Rank.SEVEN, Suit.SPADES)),
         )
 
         pokerHand = PokerHand(cards)

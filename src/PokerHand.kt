@@ -1,4 +1,4 @@
-class PokerHand(private val cards: ArrayList<Card>) {
+class PokerHand(private val cards: ArrayList<PokerCard>) {
     val rank: Int get() = calculateRank()
     private val handRankOccurrencesMap = mutableMapOf<Rank, Int>()
     private val handSuitSet = mutableSetOf<Suit>()
@@ -8,7 +8,7 @@ class PokerHand(private val cards: ArrayList<Card>) {
             throw Exception("Not a standard 5 card poker hand")
         }
 
-        val cardSet = mutableSetOf<Card>()
+        val cardSet = mutableSetOf<PokerCard>()
         cards.forEach { card ->
             cardSet.add(card)
         }
@@ -111,9 +111,9 @@ class PokerHand(private val cards: ArrayList<Card>) {
 
             handRankOccurrencesMap.keys.forEach { rank ->
                 if (handRankOccurrencesMap[rank] == 4) {
-                    fourOfAKindRankValue = rank.highValue
+                    fourOfAKindRankValue = PokerCard.getHighValue(rank)
                 } else if (handRankOccurrencesMap[rank] == 1) {
-                    kickerRankValue = rank.highValue
+                    kickerRankValue = PokerCard.getHighValue(rank)
                 }
             }
 
@@ -139,9 +139,9 @@ class PokerHand(private val cards: ArrayList<Card>) {
 
             handRankOccurrencesMap.keys.forEach { rank ->
                 if (handRankOccurrencesMap[rank] == 3) {
-                    threeOfAKindRankValue = rank.highValue
+                    threeOfAKindRankValue = PokerCard.getHighValue(rank)
                 } else if (handRankOccurrencesMap[rank] == 2) {
-                    pairRankValue = rank.highValue
+                    pairRankValue = PokerCard.getHighValue(rank)
                 }
             }
 
@@ -197,9 +197,9 @@ class PokerHand(private val cards: ArrayList<Card>) {
 
             handRankOccurrencesMap.keys.forEach { rank ->
                 if (handRankOccurrencesMap[rank] == 3) {
-                    threeOfAKindRank = rank.highValue
+                    threeOfAKindRank = PokerCard.getHighValue(rank)
                 } else if (handRankOccurrencesMap[rank] == 1) {
-                    kickerRankValues.add(rank.highValue)
+                    kickerRankValues.add(PokerCard.getHighValue(rank))
                 }
             }
 
@@ -223,9 +223,9 @@ class PokerHand(private val cards: ArrayList<Card>) {
 
             handRankOccurrencesMap.keys.forEach { rank ->
                 if (handRankOccurrencesMap[rank] == 2) {
-                    pairRankValues.add(rank.highValue)
+                    pairRankValues.add(PokerCard.getHighValue(rank))
                 } else if (handRankOccurrencesMap[rank] == 1) {
-                    kickerRankValue = rank.highValue
+                    kickerRankValue = PokerCard.getHighValue(rank)
                 }
             }
 
@@ -249,9 +249,9 @@ class PokerHand(private val cards: ArrayList<Card>) {
 
             handRankOccurrencesMap.keys.forEach { rank ->
                 if (handRankOccurrencesMap[rank] == 2) {
-                    pairRankValue = rank.highValue
+                    pairRankValue = PokerCard.getHighValue(rank)
                 } else if (handRankOccurrencesMap[rank] == 1) {
-                    kickerRankValues.add(rank.highValue)
+                    kickerRankValues.add(PokerCard.getHighValue(rank))
                 }
             }
 
@@ -303,7 +303,7 @@ class PokerHand(private val cards: ArrayList<Card>) {
         val rankValues = arrayListOf<Int>()
 
         cards.forEach { card ->
-            rankValues.add(card.rank.highValue)
+            rankValues.add(card.highValue)
         }
 
         rankValues.sortDescending()
@@ -315,7 +315,7 @@ class PokerHand(private val cards: ArrayList<Card>) {
         val rankValues = arrayListOf<Int>()
 
         cards.forEach { card ->
-            rankValues.add(card.rank.lowValue)
+            rankValues.add(card.lowValue)
         }
 
         rankValues.sortDescending()

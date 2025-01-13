@@ -3,12 +3,12 @@ fun main() {
     for (i in 1..1000000) {
         deck.shuffle()
 
-        val cards1 = arrayListOf<Card>()
-        val cards2 = arrayListOf<Card>()
+        val cards1 = arrayListOf<PokerCard>()
+        val cards2 = arrayListOf<PokerCard>()
 
         for (j in 1 .. 5) {
-            cards1.add(deck.dealTopCard())
-            cards2.add(deck.dealTopCard())
+            cards1.add(PokerCard(deck.dealTopCard()))
+            cards2.add(PokerCard(deck.dealTopCard()))
         }
 
         val hand1 = PokerHand(cards1)

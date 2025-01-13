@@ -18,7 +18,7 @@ class StandardDeckTest {
 
         Rank.allRanks().forEach { rank ->
             Suit.allSuits().forEach { suit ->
-                val cardFound = cardsDealt.get(Card(rank, suit).toString()) ?: false
+                val cardFound = cardsDealt.get(StandardCard(rank, suit).toString()) ?: false
                 assertTrue(cardFound)
             }
         }
