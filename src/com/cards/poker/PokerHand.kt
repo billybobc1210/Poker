@@ -375,8 +375,8 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
         private fun buildFourOfAKindAndFullHouseRelativeRankMap() {
             var rank: Int = NUM_FOUR_OF_A_KIND_RANKS - 1
 
-            for (fourOrThreeOfAKindRank in 14 downTo 2) {
-                for (kickerOrPairRank in 14 downTo 2) {
+            for (fourOrThreeOfAKindRank in PokerCard.getHighValue(Rank.ACE) downTo PokerCard.getHighValue(Rank.TWO)) {
+                for (kickerOrPairRank in PokerCard.getHighValue(Rank.ACE) downTo PokerCard.getHighValue(Rank.TWO)) {
                     if (fourOrThreeOfAKindRank == kickerOrPairRank) {
                         continue
                     }
@@ -395,8 +395,8 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
         private fun buildThreeOfAKindRelativeRankMap() {
             var rank: Int = NUM_THREE_OF_A_KIND_RANKS - 1
 
-            for (threeOfAKindRank in 14 downTo 2) {
-                for (topKickerRank in 14 downTo 3) {
+            for (threeOfAKindRank in PokerCard.getHighValue(Rank.ACE) downTo PokerCard.getHighValue(Rank.TWO)) {
+                for (topKickerRank in PokerCard.getHighValue(Rank.ACE) downTo PokerCard.getHighValue(Rank.THREE)) {
                     for (bottomKickerRank in topKickerRank - 1 downTo 2) {
                         if ((threeOfAKindRank == topKickerRank) ||
                             (threeOfAKindRank == bottomKickerRank) ||
@@ -420,9 +420,9 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
         private fun buildTwoPairRelativeRankMap() {
             var rank: Int = NUM_TWO_PAIR_RANKS - 1
 
-            for (topPairRank in 14 downTo 3) {
-                for (bottomPairRank in topPairRank - 1 downTo 2) {
-                    for (kickerRank in 14 downTo 2) {
+            for (topPairRank in PokerCard.getHighValue(Rank.ACE) downTo PokerCard.getHighValue(Rank.THREE)) {
+                for (bottomPairRank in topPairRank - 1 downTo PokerCard.getHighValue(Rank.TWO)) {
+                    for (kickerRank in PokerCard.getHighValue(Rank.ACE) downTo PokerCard.getHighValue(Rank.TWO)) {
                         if ((topPairRank == bottomPairRank) ||
                             (topPairRank == kickerRank) ||
                             (bottomPairRank == kickerRank)) {
@@ -445,10 +445,10 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
         private fun buildPairRelativeRankMap() {
             var rank: Int = NUM_PAIR_RANKS - 1
 
-            for (pairRank in 14 downTo 2) {
-                for (topKickerRank in 14 downTo 4) {
-                    for (middleKickerRank in topKickerRank - 1 downTo 3) {
-                        for (bottomKickerRank in middleKickerRank - 1 downTo 2) {
+            for (pairRank in PokerCard.getHighValue(Rank.ACE) downTo PokerCard.getHighValue(Rank.TWO)) {
+                for (topKickerRank in PokerCard.getHighValue(Rank.ACE) downTo PokerCard.getHighValue(Rank.FOUR)) {
+                    for (middleKickerRank in topKickerRank - 1 downTo PokerCard.getHighValue(Rank.THREE)) {
+                        for (bottomKickerRank in middleKickerRank - 1 downTo PokerCard.getHighValue(Rank.TWO)) {
                             if ((pairRank == topKickerRank) ||
                                 (pairRank == middleKickerRank) ||
                                 (pairRank == bottomKickerRank) ||
@@ -477,11 +477,11 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
             var highCardRelativeRank: Int = NUM_HIGH_CARD_RANKS - 1
             var straightRelativeRank: Int = NUM_STRAIGHT_RANKS - 1
 
-            for (highCardRank in 14 downTo 6) {
-                for (secondHighestCardRank in highCardRank - 1 downTo 5) {
-                    for (thirdHighestCardRank in secondHighestCardRank - 1 downTo 4) {
-                        for (fourthHighestCardRank in thirdHighestCardRank - 1 downTo 3) {
-                            for (fifthHighestCardRank in fourthHighestCardRank - 1 downTo 2) {
+            for (highCardRank in PokerCard.getHighValue(Rank.ACE) downTo PokerCard.getHighValue(Rank.SIX)) {
+                for (secondHighestCardRank in highCardRank - 1 downTo PokerCard.getHighValue(Rank.FIVE)) {
+                    for (thirdHighestCardRank in secondHighestCardRank - 1 downTo PokerCard.getHighValue(Rank.FOUR)) {
+                        for (fourthHighestCardRank in thirdHighestCardRank - 1 downTo PokerCard.getHighValue(Rank.THREE)) {
+                            for (fifthHighestCardRank in fourthHighestCardRank - 1 downTo PokerCard.getHighValue((Rank.TWO))) {
                                 val key: String = arrayListOf(
                                     highCardRank,
                                     secondHighestCardRank,
