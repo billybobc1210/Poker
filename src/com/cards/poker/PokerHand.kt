@@ -298,9 +298,11 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
             initHandRankMapForPairs()
             initHandRankMapForHighCardsFlushesStraightsAndStraightFlushes()
 
-            handRankMap.keys.forEach { key ->
-                println("$key -> " + handRankMap[key])
-            }
+//            val rankToHandMap = handRankMap.entries.associateBy({ it.value }) { it.key }
+//
+//            (0..7461).forEach { rank ->
+//                println(rankToHandMap[rank] + " -> $rank")
+//            }
         }
     }
 }
