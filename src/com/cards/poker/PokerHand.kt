@@ -114,11 +114,11 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
             var fourOfAKindCardRankValue = 0
             var kickerCardRankValue = 0
 
-            handCardRankOccurrencesMap.keys.forEach { rank ->
-                if (handCardRankOccurrencesMap[rank] == 4) {
-                    fourOfAKindCardRankValue = PokerCard.getHighValue(rank)
-                } else if (handCardRankOccurrencesMap[rank] == 1) {
-                    kickerCardRankValue = PokerCard.getHighValue(rank)
+            handCardRankOccurrencesMap.keys.forEach { cardRank ->
+                if (handCardRankOccurrencesMap[cardRank] == 4) {
+                    fourOfAKindCardRankValue = PokerCard.getHighValue(cardRank)
+                } else if (handCardRankOccurrencesMap[cardRank] == 1) {
+                    kickerCardRankValue = PokerCard.getHighValue(cardRank)
                 }
             }
 
@@ -128,8 +128,8 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
                     kickerCardRankValue
                 ).joinToString(" ")
 
-                fourOfAKindAndFullHouseRelativeHandRankMap[fourOfAKindRelativeHandRankValuesKey]?.let { relativeRank ->
-                    return MIN_FOUR_OF_A_KIND_RANK + relativeRank
+                fourOfAKindAndFullHouseRelativeHandRankMap[fourOfAKindRelativeHandRankValuesKey]?.let { relativeHandRank ->
+                    return MIN_FOUR_OF_A_KIND_RANK + relativeHandRank
                 }
             }
         }
@@ -142,11 +142,11 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
             var threeOfAKindCardRankValue = 0
             var pairCardRankValue = 0
 
-            handCardRankOccurrencesMap.keys.forEach { rank ->
-                if (handCardRankOccurrencesMap[rank] == 3) {
-                    threeOfAKindCardRankValue = PokerCard.getHighValue(rank)
-                } else if (handCardRankOccurrencesMap[rank] == 2) {
-                    pairCardRankValue = PokerCard.getHighValue(rank)
+            handCardRankOccurrencesMap.keys.forEach { cardRank ->
+                if (handCardRankOccurrencesMap[cardRank] == 3) {
+                    threeOfAKindCardRankValue = PokerCard.getHighValue(cardRank)
+                } else if (handCardRankOccurrencesMap[cardRank] == 2) {
+                    pairCardRankValue = PokerCard.getHighValue(cardRank)
                 }
             }
 
@@ -156,8 +156,8 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
                     pairCardRankValue
                 ).joinToString(" ")
 
-                fourOfAKindAndFullHouseRelativeHandRankMap[fullHouseRelativeHandRankValuesKey]?.let { relativeRank ->
-                    return MIN_FULL_HOUSE_RANK + relativeRank
+                fourOfAKindAndFullHouseRelativeHandRankMap[fullHouseRelativeHandRankValuesKey]?.let { relativeHandRank ->
+                    return MIN_FULL_HOUSE_RANK + relativeHandRank
                 }
             }
         }
@@ -169,8 +169,8 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
         if (isFlush()) {
             val handHighCardRankValuesKey = buildHandHighCardRankValuesKey()
 
-            highCardRelativeHandRankMap[handHighCardRankValuesKey]?.let { relativeRank ->
-                return MIN_FLUSH_RANK + relativeRank
+            highCardRelativeHandRankMap[handHighCardRankValuesKey]?.let { relativeHandRank ->
+                return MIN_FLUSH_RANK + relativeHandRank
             }
         }
 
@@ -194,11 +194,11 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
             var threeOfAKindCardRankValue = 0
             val kickerCardRankValues = arrayListOf<Int>()
 
-            handCardRankOccurrencesMap.keys.forEach { rank ->
-                if (handCardRankOccurrencesMap[rank] == 3) {
-                    threeOfAKindCardRankValue = PokerCard.getHighValue(rank)
-                } else if (handCardRankOccurrencesMap[rank] == 1) {
-                    kickerCardRankValues.add(PokerCard.getHighValue(rank))
+            handCardRankOccurrencesMap.keys.forEach { cardRank ->
+                if (handCardRankOccurrencesMap[cardRank] == 3) {
+                    threeOfAKindCardRankValue = PokerCard.getHighValue(cardRank)
+                } else if (handCardRankOccurrencesMap[cardRank] == 1) {
+                    kickerCardRankValues.add(PokerCard.getHighValue(cardRank))
                 }
             }
 
@@ -206,8 +206,8 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
                 kickerCardRankValues.sortDescending()
                 val threeOfAKindRelativeHandRankValuesKey = arrayListOf(threeOfAKindCardRankValue).plus(kickerCardRankValues).joinToString(" ")
 
-                threeOfAKindRelativeHandRankMap[threeOfAKindRelativeHandRankValuesKey]?.let { relativeRank ->
-                    return MIN_THREE_OF_A_KIND_RANK + relativeRank
+                threeOfAKindRelativeHandRankMap[threeOfAKindRelativeHandRankValuesKey]?.let { relativeHandRank ->
+                    return MIN_THREE_OF_A_KIND_RANK + relativeHandRank
                 }
             }
         }
@@ -220,11 +220,11 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
             val pairCardRankValues = arrayListOf<Int>()
             var kickerCardRankValue = 0
 
-            handCardRankOccurrencesMap.keys.forEach { rank ->
-                if (handCardRankOccurrencesMap[rank] == 2) {
-                    pairCardRankValues.add(PokerCard.getHighValue(rank))
-                } else if (handCardRankOccurrencesMap[rank] == 1) {
-                    kickerCardRankValue = PokerCard.getHighValue(rank)
+            handCardRankOccurrencesMap.keys.forEach { cardRank ->
+                if (handCardRankOccurrencesMap[cardRank] == 2) {
+                    pairCardRankValues.add(PokerCard.getHighValue(cardRank))
+                } else if (handCardRankOccurrencesMap[cardRank] == 1) {
+                    kickerCardRankValue = PokerCard.getHighValue(cardRank)
                 }
             }
 
@@ -232,8 +232,8 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
                 pairCardRankValues.sortDescending()
                 val twoPairRelativeHandRankValuesKey = pairCardRankValues.plus(kickerCardRankValue).joinToString(" ")
 
-                twoPairRelativeHandRankMap[twoPairRelativeHandRankValuesKey]?.let { relativeRank ->
-                    return MIN_TWO_PAIR_RANK + relativeRank
+                twoPairRelativeHandRankMap[twoPairRelativeHandRankValuesKey]?.let { relativeHandRank ->
+                    return MIN_TWO_PAIR_RANK + relativeHandRank
                 }
             }
         }
@@ -246,11 +246,11 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
             var pairCardRankValue = 0
             val kickerCardRankValues = arrayListOf<Int>()
 
-            handCardRankOccurrencesMap.keys.forEach { rank ->
-                if (handCardRankOccurrencesMap[rank] == 2) {
-                    pairCardRankValue = PokerCard.getHighValue(rank)
-                } else if (handCardRankOccurrencesMap[rank] == 1) {
-                    kickerCardRankValues.add(PokerCard.getHighValue(rank))
+            handCardRankOccurrencesMap.keys.forEach { cardRank ->
+                if (handCardRankOccurrencesMap[cardRank] == 2) {
+                    pairCardRankValue = PokerCard.getHighValue(cardRank)
+                } else if (handCardRankOccurrencesMap[cardRank] == 1) {
+                    kickerCardRankValues.add(PokerCard.getHighValue(cardRank))
                 }
             }
 
@@ -258,8 +258,8 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
                 kickerCardRankValues.sortDescending()
                 val pairRelativeHandRankValuesKey = arrayListOf(pairCardRankValue).plus(kickerCardRankValues).joinToString(" ")
 
-                pairRelativeHandRankMap[pairRelativeHandRankValuesKey]?.let { relativeRank ->
-                    return MIN_PAIR_RANK + relativeRank
+                pairRelativeHandRankMap[pairRelativeHandRankValuesKey]?.let { relativeHandRank ->
+                    return MIN_PAIR_RANK + relativeHandRank
                 }
             }
         }
@@ -271,8 +271,8 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
         if (!isFlush()) {
             val handHighCardRankValuesKey = buildHandHighCardRankValuesKey()
 
-            highCardRelativeHandRankMap[handHighCardRankValuesKey]?.let { relativeRank ->
-                return MIN_HIGH_CARD_RANK + relativeRank
+            highCardRelativeHandRankMap[handHighCardRankValuesKey]?.let { relativeHandRank ->
+                return MIN_HIGH_CARD_RANK + relativeHandRank
             }
         }
 
@@ -286,14 +286,14 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
     private fun straightRelativeHandRank(): Int {
         val handHighCardRankValuesKey = buildHandHighCardRankValuesKey()
 
-        straightRelativeHandRankMap[handHighCardRankValuesKey]?.let { relativeRank ->
-            return relativeRank
+        straightRelativeHandRankMap[handHighCardRankValuesKey]?.let { relativeHandRank ->
+            return relativeHandRank
         }
 
         val handLowCardRankValuesKey = buildHandLowCardRankValuesKey()
 
-        straightRelativeHandRankMap[handLowCardRankValuesKey]?.let { relativeRank ->
-            return relativeRank
+        straightRelativeHandRankMap[handLowCardRankValuesKey]?.let { relativeHandRank ->
+            return relativeHandRank
         }
 
         return -1
@@ -381,7 +381,7 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
                         kickerOrPairCardRank
                     ).joinToString(" ")
 
-//                    println("$key -> $rank")
+//                    println("$key -> $relativeHandRank")
                     fourOfAKindAndFullHouseRelativeHandRankMap[key] = relativeHandRank--
                 }
             }
@@ -405,7 +405,7 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
                             bottomKickerCardRank
                         ).joinToString(" ")
 
-//                        println("$key -> $rank")
+//                        println("$key -> $relativeHandRank")
                         threeOfAKindRelativeHandRankMap[key] = relativeHandRank--
                     }
                 }
@@ -430,7 +430,7 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
                             kickerCardRank
                         ).joinToString(" ")
 
-//                        println("$key -> $rank")
+//                        println("$key -> $relativeHandRank")
                         twoPairRelativeHandRankMap[key] = relativeHandRank--
                     }
                 }
@@ -460,7 +460,7 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
                                 bottomKickerCardRank
                             ).joinToString(" ")
 
-//                            println("$key -> $rank")
+//                            println("$key -> $relativeHandRank")
                             pairRelativeHandRankMap[key] = relativeHandRank--
                         }
                     }
