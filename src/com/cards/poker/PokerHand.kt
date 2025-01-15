@@ -16,14 +16,11 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
         val cardSet = mutableSetOf<PokerCard>()
         cards.forEach { card ->
             cardSet.add(card)
+            handSuitSet.add(card.suit)
         }
 
         if (cardSet.size < 5) {
             throw Exception("All 5 cards in hand must be unique")
-        }
-
-        cards.forEach { card ->
-            handSuitSet.add(card.suit)
         }
 
         isSuited = handSuitSet.size == 1
