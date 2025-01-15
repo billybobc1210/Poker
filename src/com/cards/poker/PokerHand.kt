@@ -27,14 +27,13 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
     }
 
     private fun calculateHandRank(): Int {
-        val isSuitedSuffix = if (isSuited()) " $SUITED_SUFFIX" else ""
-        val highCardHandRankMapKey = convertHandToHighCardHandRankMapKey() + isSuitedSuffix
+        val highCardHandRankMapKey = convertHandToHandRankMapKey()
 
         handRankMap[highCardHandRankMapKey]?.let { handRank ->
             return handRank
         }
 
-        val lowCardHandRankMapKey = convertHandToLowCardHandRankMapKey() + isSuitedSuffix
+        val lowCardHandRankMapKey = convertHandToHandRankMapKey(true)
 
         handRankMap[lowCardHandRankMapKey]?.let { handRank ->
             return handRank
@@ -43,32 +42,20 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
         throw Exception("Invalid poker hand")
     }
 
-    private fun isSuited(): Boolean {
-        return handSuitSet.size == 1
-    }
-
-    private fun convertHandToHighCardHandRankMapKey(): String {
+    private fun convertHandToHandRankMapKey(useLowValues: Boolean = false): String {
         val highCardRankValues = arrayListOf<Int>()
 
         cards.forEach { card ->
-            highCardRankValues.add(card.highValue)
+            highCardRankValues.add(if (useLowValues) card.lowValue else card.highValue)
         }
 
         highCardRankValues.sortDescending()
 
-        return highCardRankValues.joinToString(" ")
+        return highCardRankValues.joinToString(" ") + if (isSuited()) " $SUITED_SUFFIX" else ""
     }
 
-    private fun convertHandToLowCardHandRankMapKey(): String {
-        val lowCardRankValues = arrayListOf<Int>()
-
-        cards.forEach { card ->
-            lowCardRankValues.add(card.lowValue)
-        }
-
-        lowCardRankValues.sortDescending()
-
-        return lowCardRankValues.joinToString(" ")
+    private fun isSuited(): Boolean {
+        return handSuitSet.size == 1
     }
 
     override fun toString(): String {
