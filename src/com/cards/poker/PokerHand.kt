@@ -99,28 +99,28 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
         private fun initHandRankMapForFourOfAKindsAndFullHouses() {
             var relativeHandRank: Int = NUM_FOUR_OF_A_KIND_AND_FULL_HOUSE_RANKS - 1
 
-            for (fourOrThreeOfAKindCardRankValue in PokerCard.getHighValue(Rank.ACE) downTo PokerCard.getHighValue(Rank.TWO)) {
-                for (kickerOrPairCardRankValue in PokerCard.getHighValue(Rank.ACE) downTo PokerCard.getHighValue(Rank.TWO)) {
-                    if (fourOrThreeOfAKindCardRankValue == kickerOrPairCardRankValue) {
+            for (majorCardRankValue in PokerCard.getHighValue(Rank.ACE) downTo PokerCard.getHighValue(Rank.TWO)) {
+                for (minorCardRankValue in PokerCard.getHighValue(Rank.ACE) downTo PokerCard.getHighValue(Rank.TWO)) {
+                    if (majorCardRankValue == minorCardRankValue) {
                         continue
                     }
 
                     val fourOfAKindRankValues = arrayListOf(
-                        fourOrThreeOfAKindCardRankValue,
-                        fourOrThreeOfAKindCardRankValue,
-                        fourOrThreeOfAKindCardRankValue,
-                        fourOrThreeOfAKindCardRankValue,
-                        kickerOrPairCardRankValue
+                        majorCardRankValue,
+                        majorCardRankValue,
+                        majorCardRankValue,
+                        majorCardRankValue,
+                        minorCardRankValue
                     )
                     fourOfAKindRankValues.sortDescending()
                     val fourOfAkindKey = fourOfAKindRankValues.joinToString(" ")
 
                     val fullHouseRankValues = arrayListOf(
-                        fourOrThreeOfAKindCardRankValue,
-                        fourOrThreeOfAKindCardRankValue,
-                        fourOrThreeOfAKindCardRankValue,
-                        kickerOrPairCardRankValue,
-                        kickerOrPairCardRankValue
+                        majorCardRankValue,
+                        majorCardRankValue,
+                        majorCardRankValue,
+                        minorCardRankValue,
+                        minorCardRankValue
                     )
                     fullHouseRankValues.sortDescending()
                     val fullHouseKey = fullHouseRankValues.joinToString(" ")
@@ -280,12 +280,12 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
             initHandRankMapForTwoPairs()
             initHandRankMapForPairs()
             initHandRankMapForHighCardsFlushesStraightsAndStraightFlushes()
-
-            val rankToHandMap = handRankMap.entries.associateBy({ it.value }) { it.key }
-
-            (0..7461).forEach { rank ->
-                println(rankToHandMap[rank] + " -> $rank")
-            }
+//
+//            val rankToHandMap = handRankMap.entries.associateBy({ it.value }) { it.key }
+//
+//            (0..7461).forEach { rank ->
+//                println(rankToHandMap[rank] + " -> $rank")
+//            }
         }
     }
 }
