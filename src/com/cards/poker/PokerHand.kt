@@ -74,8 +74,7 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
     override fun toString(): String {
         return cards.fold("") { acc, card ->
             val prefix = if (acc == "") "" else " "
-
-            acc + prefix + card.abbreviation
+            acc + "$prefix${card.abbreviation}"
         }
     }
 
@@ -93,7 +92,8 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
         const val NUM_THREE_OF_A_KIND_RANKS: Int = 858
         const val MIN_THREE_OF_A_KIND_RANK: Int = MAX_TWO_PAIR_RANK + 1
         const val MAX_THREE_OF_A_KIND_RANK: Int = MIN_THREE_OF_A_KIND_RANK + NUM_THREE_OF_A_KIND_RANKS - 1
-        const val NUM_STRAIGHT_RANKS: Int = 10
+        const val NUM_STRAIGHT_AND_STRAIGHT_FLUSH_RANKS: Int = 10
+        const val NUM_STRAIGHT_RANKS: Int = NUM_STRAIGHT_AND_STRAIGHT_FLUSH_RANKS
         const val MIN_STRAIGHT_RANK: Int = MAX_THREE_OF_A_KIND_RANK + 1
         const val MAX_STRAIGHT_RANK: Int = MIN_STRAIGHT_RANK + NUM_STRAIGHT_RANKS - 1
         const val NUM_FLUSH_RANKS: Int = NUM_HIGH_CARD_AND_FLUSH_RANKS
@@ -106,7 +106,7 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
         const val NUM_FOUR_OF_A_KIND_RANKS = NUM_FOUR_OF_A_KIND_AND_FULL_HOUSE_RANKS
         const val MIN_FOUR_OF_A_KIND_RANK: Int = MAX_FULL_HOUSE_RANK + 1
         const val MAX_FOUR_OF_A_KIND_RANK: Int = MIN_FOUR_OF_A_KIND_RANK + NUM_FOUR_OF_A_KIND_RANKS - 1
-        const val NUM_STRAIGHT_FLUSH_RANKS: Int = 10
+        const val NUM_STRAIGHT_FLUSH_RANKS: Int = NUM_STRAIGHT_AND_STRAIGHT_FLUSH_RANKS
         const val MIN_STRAIGHT_FLUSH_RANK: Int = MAX_FOUR_OF_A_KIND_RANK + 1
         const val MAX_STRAIGHT_FLUSH_RANK: Int = MIN_STRAIGHT_FLUSH_RANK + NUM_STRAIGHT_FLUSH_RANKS - 1
         const val SUITED_SUFFIX: String = "SUITED"
@@ -239,7 +239,7 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
 
         private fun initHandRankMapForHighCardsFlushesStraightsAndStraightFlushes() {
             var highCardRelativeHandRank: Int = NUM_HIGH_CARD_RANKS - 1
-            var straightRelativeHandRank: Int = NUM_STRAIGHT_RANKS - 1
+            var straightRelativeHandRank: Int = NUM_STRAIGHT_AND_STRAIGHT_FLUSH_RANKS - 1
 
             val falseFiveHighStraightHandRankKey = arrayListOf(
                 PokerCard.getHighValue(Rank.ACE),
