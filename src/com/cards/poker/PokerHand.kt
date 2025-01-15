@@ -13,18 +13,18 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
         }
 
         val cardSet = mutableSetOf<PokerCard>()
-        val handSuitSet = mutableSetOf<Suit>()
+        val suitSet = mutableSetOf<Suit>()
 
         cards.forEach { card ->
             cardSet.add(card)
-            handSuitSet.add(card.suit)
+            suitSet.add(card.suit)
         }
 
         if (cardSet.size < 5) {
             throw Exception("All 5 cards in hand must be unique")
         }
 
-        isSuited = handSuitSet.size == 1
+        isSuited = suitSet.size == 1
     }
 
     private fun calculateHandRank(): Int {
