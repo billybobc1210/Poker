@@ -5,7 +5,6 @@ import com.cards.Suit
 
 class PokerHand(private val cards: ArrayList<PokerCard>) {
     val rank: Int get() = calculateHandRank()
-    private val handSuitSet = mutableSetOf<Suit>()
     private var isSuited: Boolean = false
 
     init {
@@ -14,6 +13,8 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
         }
 
         val cardSet = mutableSetOf<PokerCard>()
+        val handSuitSet = mutableSetOf<Suit>()
+
         cards.forEach { card ->
             cardSet.add(card)
             handSuitSet.add(card.suit)
