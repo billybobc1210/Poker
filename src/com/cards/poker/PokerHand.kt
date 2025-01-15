@@ -33,7 +33,7 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
             return handRank
         }
 
-        val lowCardHandRankMapKey = convertHandToHandRankMapKey(true)
+        val lowCardHandRankMapKey = convertHandToHandRankMapKey(false)
 
         handRankMap[lowCardHandRankMapKey]?.let { handRank ->
             return handRank
@@ -42,16 +42,16 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
         throw Exception("Invalid poker hand")
     }
 
-    private fun convertHandToHandRankMapKey(useLowValues: Boolean = false): String {
-        val highCardRankValues = arrayListOf<Int>()
+    private fun convertHandToHandRankMapKey(useHighValues: Boolean = true): String {
+        val cardRankValues = arrayListOf<Int>()
 
         cards.forEach { card ->
-            highCardRankValues.add(if (useLowValues) card.lowValue else card.highValue)
+            cardRankValues.add(if (useHighValues) card.lowValue else card.highValue)
         }
 
-        highCardRankValues.sortDescending()
+        cardRankValues.sortDescending()
 
-        return highCardRankValues.joinToString(" ") + if (isSuited()) " $SUITED_SUFFIX" else ""
+        return cardRankValues.joinToString(" ") + if (isSuited()) " $SUITED_SUFFIX" else ""
     }
 
     private fun isSuited(): Boolean {
