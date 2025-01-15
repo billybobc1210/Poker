@@ -46,7 +46,7 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
         val cardRankValues = arrayListOf<Int>()
 
         cards.forEach { card ->
-            cardRankValues.add(if (useHighValues) card.lowValue else card.highValue)
+            cardRankValues.add(if (useHighValues) card.highValue else card.lowValue)
         }
 
         cardRankValues.sortDescending()
