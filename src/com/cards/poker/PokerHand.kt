@@ -51,7 +51,7 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
 
         cardRankValues.sortDescending()
 
-        return cardRankValues.joinToString(" ") + if (isSuited) " $SUITED_SUFFIX" else ""
+        return cardRankValues.joinToString(" ") + if (isSuited) SUITED_SUFFIX else ""
     }
 
     override fun toString(): String {
@@ -92,7 +92,7 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
         const val NUM_STRAIGHT_FLUSH_RANKS: Int = NUM_STRAIGHT_AND_STRAIGHT_FLUSH_RANKS
         const val MIN_STRAIGHT_FLUSH_RANK: Int = MAX_FOUR_OF_A_KIND_RANK + 1
         const val MAX_STRAIGHT_FLUSH_RANK: Int = MIN_STRAIGHT_FLUSH_RANK + NUM_STRAIGHT_FLUSH_RANKS - 1
-        const val SUITED_SUFFIX: String = "SUITED"
+        const val SUITED_SUFFIX: String = " SUITED"
 
         private val handRankMap = mutableMapOf<String, Int>()
 
@@ -259,10 +259,10 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
 
                                 if (highCardRankValue - fifthHighestCardRankValue == 4) {
                                     handRankMap[key] = MIN_STRAIGHT_RANK + straightRelativeHandRank
-                                    handRankMap["$key $SUITED_SUFFIX"] = MIN_STRAIGHT_FLUSH_RANK + straightRelativeHandRank--
+                                    handRankMap["$key$SUITED_SUFFIX"] = MIN_STRAIGHT_FLUSH_RANK + straightRelativeHandRank--
                                 } else {
                                     handRankMap[key] = MIN_HIGH_CARD_RANK + highCardRelativeHandRank
-                                    handRankMap["$key $SUITED_SUFFIX"] = MIN_FLUSH_RANK + highCardRelativeHandRank--
+                                    handRankMap["$key$SUITED_SUFFIX"] = MIN_FLUSH_RANK + highCardRelativeHandRank--
                                 }
                             }
                         }
@@ -271,7 +271,7 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
             }
 
             handRankMap[trueFiveHighStraightHandRankKey] = MIN_STRAIGHT_RANK
-            handRankMap["$trueFiveHighStraightHandRankKey $SUITED_SUFFIX"] = MIN_STRAIGHT_FLUSH_RANK
+            handRankMap["$trueFiveHighStraightHandRankKey$SUITED_SUFFIX"] = MIN_STRAIGHT_FLUSH_RANK
         }
 
         init {
@@ -281,11 +281,11 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
             initHandRankMapForPairs()
             initHandRankMapForHighCardsFlushesStraightsAndStraightFlushes()
 
-//            val rankToHandMap = handRankMap.entries.associateBy({ it.value }) { it.key }
-//
-//            (0..7461).forEach { rank ->
-//                println(rankToHandMap[rank] + " -> $rank")
-//            }
+            val rankToHandMap = handRankMap.entries.associateBy({ it.value }) { it.key }
+
+            (0..7461).forEach { rank ->
+                println(rankToHandMap[rank] + " -> $rank")
+            }
         }
     }
 }
