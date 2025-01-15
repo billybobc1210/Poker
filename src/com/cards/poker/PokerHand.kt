@@ -225,7 +225,7 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
         }
 
         private fun initHandRankMapForHighCardsFlushesStraightsAndStraightFlushes() {
-            var highCardRelativeHandRank: Int = NUM_HIGH_CARD_RANKS - 1
+            var highCardRelativeHandRank: Int = NUM_HIGH_CARD_AND_FLUSH_RANKS - 1
             var straightRelativeHandRank: Int = NUM_STRAIGHT_AND_STRAIGHT_FLUSH_RANKS - 1
 
             val falseFiveHighStraightHandRankKey = arrayListOf(
