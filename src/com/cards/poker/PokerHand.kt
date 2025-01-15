@@ -6,6 +6,7 @@ import com.cards.Suit
 class PokerHand(private val cards: ArrayList<PokerCard>) {
     val rank: Int get() = calculateHandRank()
     private val handSuitSet = mutableSetOf<Suit>()
+    private var isSuited: Boolean = false
 
     init {
         if (cards.size != 5) {
@@ -24,16 +25,18 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
         cards.forEach { card ->
             handSuitSet.add(card.suit)
         }
+
+        isSuited = handSuitSet.size == 1
     }
 
     private fun calculateHandRank(): Int {
-        val highCardHandRankMapKey = convertHandToHandRankMapKey()
+        val highCardHandRankMapKey = getHandRankMapKey()
 
         handRankMap[highCardHandRankMapKey]?.let { handRank ->
             return handRank
         }
 
-        val lowCardHandRankMapKey = convertHandToHandRankMapKey(false)
+        val lowCardHandRankMapKey = getHandRankMapKey(false)
 
         handRankMap[lowCardHandRankMapKey]?.let { handRank ->
             return handRank
@@ -42,7 +45,7 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
         throw Exception("Invalid poker hand")
     }
 
-    private fun convertHandToHandRankMapKey(useHighValues: Boolean = true): String {
+    private fun getHandRankMapKey(useHighValues: Boolean = true): String {
         val cardRankValues = arrayListOf<Int>()
 
         cards.forEach { card ->
@@ -51,11 +54,7 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
 
         cardRankValues.sortDescending()
 
-        return cardRankValues.joinToString(" ") + if (isSuited()) " $SUITED_SUFFIX" else ""
-    }
-
-    private fun isSuited(): Boolean {
-        return handSuitSet.size == 1
+        return cardRankValues.joinToString(" ") + if (isSuited) " $SUITED_SUFFIX" else ""
     }
 
     override fun toString(): String {
