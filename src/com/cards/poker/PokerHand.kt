@@ -28,15 +28,15 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
 
     private fun calculateHandRank(): Int {
         val isSuitedSuffix = if (isSuited()) " $SUITED_SUFFIX" else ""
-        val handHighCardRankValuesKey = buildHandHighCardRankValuesKey() + isSuitedSuffix
+        val highCardHandRankMapKey = convertHandToHighCardHandRankMapKey() + isSuitedSuffix
 
-        handRankMap[handHighCardRankValuesKey]?.let { handRank ->
+        handRankMap[highCardHandRankMapKey]?.let { handRank ->
             return handRank
         }
 
-        val handLowCardRankValuesKey = buildHandLowCardRankValuesKey() + isSuitedSuffix
+        val lowCardHandRankMapKey = convertHandToLowCardHandRankMapKey() + isSuitedSuffix
 
-        handRankMap[handLowCardRankValuesKey]?.let { handRank ->
+        handRankMap[lowCardHandRankMapKey]?.let { handRank ->
             return handRank
         }
 
@@ -47,7 +47,7 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
         return handSuitSet.size == 1
     }
 
-    private fun buildHandHighCardRankValuesKey(): String {
+    private fun convertHandToHighCardHandRankMapKey(): String {
         val highCardRankValues = arrayListOf<Int>()
 
         cards.forEach { card ->
@@ -59,7 +59,7 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
         return highCardRankValues.joinToString(" ")
     }
 
-    private fun buildHandLowCardRankValuesKey(): String {
+    private fun convertHandToLowCardHandRankMapKey(): String {
         val lowCardRankValues = arrayListOf<Int>()
 
         cards.forEach { card ->

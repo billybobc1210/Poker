@@ -4,7 +4,7 @@ import com.cards.poker.PokerHand
 
 fun main() {
     val deck = StandardDeck()
-    for (i in 1..1000000) {
+    for (i in 1..10000000) {
         deck.shuffle()
 
         val cards1 = arrayListOf<PokerCard>()
@@ -21,7 +21,7 @@ fun main() {
         val rank1 = hand1.rank
         val rank2 = hand2.rank
 
-        if ((rank1 > 7000) && (rank2 > 7000)) {
+        if ((rank1 < 10) && (rank2 < 10)) {
             if (rank1 > rank2) {
                 println("$hand1 ($rank1) > $hand2 ($rank2)")
             } else if (rank1 < rank2) {
