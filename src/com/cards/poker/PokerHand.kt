@@ -4,10 +4,10 @@ import com.cards.Rank
 import com.cards.Suit
 
 class PokerHand(private val cards: ArrayList<PokerCard>) {
-    val rank: Int get() = calculateHandRank()
+    val rank: Int = calculateHandRank()
     private var isSuited: Boolean = false
 
-    init {
+    private fun calculateHandRank(): Int {
         if (cards.size != 5) {
             throw Exception("Not a standard 5 card poker hand")
         }
@@ -25,9 +25,7 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
         }
 
         isSuited = suitSet.size == 1
-    }
 
-    private fun calculateHandRank(): Int {
         val highCardHandRankMapKey = getHandRankMapKey()
 
         handRankMap[highCardHandRankMapKey]?.let { handRank ->
