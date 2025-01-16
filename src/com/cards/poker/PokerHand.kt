@@ -96,7 +96,8 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
         private val handRankMap = mutableMapOf<String, Int>()
 
         private fun initHandRankMapForFourOfAKindsAndFullHouses() {
-            var relativeHandRank: Int = NUM_FOUR_OF_A_KIND_AND_FULL_HOUSE_RANKS - 1
+            var fourOfAKindHandRank: Int = MAX_FOUR_OF_A_KIND_RANK
+            var fullHouseHandRank: Int = MAX_FULL_HOUSE_RANK
 
             for (majorCardRankValue in PokerCard.getHighValue(Rank.ACE) downTo PokerCard.getHighValue(Rank.TWO)) {
                 for (minorCardRankValue in PokerCard.getHighValue(Rank.ACE) downTo PokerCard.getHighValue(Rank.TWO)) {
@@ -124,14 +125,14 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
                     fullHouseRankValues.sortDescending()
                     val fullHouseKey = fullHouseRankValues.joinToString(" ")
 
-                    handRankMap[fourOfAkindKey] = MIN_FOUR_OF_A_KIND_RANK + relativeHandRank
-                    handRankMap[fullHouseKey] = MIN_FULL_HOUSE_RANK + relativeHandRank--
+                    handRankMap[fourOfAkindKey] = fourOfAKindHandRank--
+                    handRankMap[fullHouseKey] = fullHouseHandRank--
                 }
             }
         }
 
         private fun initHandRankMapForThreeOfAKinds() {
-            var relativeHandRank: Int = NUM_THREE_OF_A_KIND_RANKS - 1
+            var threeOfAKindHandRank: Int = MAX_THREE_OF_A_KIND_RANK
 
             for (threeOfAKindCardRankValue in PokerCard.getHighValue(Rank.ACE) downTo PokerCard.getHighValue(Rank.TWO)) {
                 for (topKickerCardRankValue in PokerCard.getHighValue(Rank.ACE) downTo PokerCard.getHighValue(Rank.THREE)) {
@@ -152,14 +153,14 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
                         rankValues.sortDescending()
                         val key = rankValues.joinToString(" ")
 
-                        handRankMap[key] = MIN_THREE_OF_A_KIND_RANK + relativeHandRank--
+                        handRankMap[key] = threeOfAKindHandRank--
                     }
                 }
             }
         }
 
         private fun initHandRankMapForTwoPairs() {
-            var relativeHandRank: Int = NUM_TWO_PAIR_RANKS - 1
+            var twoPairHandRank: Int = MAX_TWO_PAIR_RANK
 
             for (topPairCardRankValue in PokerCard.getHighValue(Rank.ACE) downTo PokerCard.getHighValue(Rank.THREE)) {
                 for (bottomPairCardRankValue in topPairCardRankValue - 1 downTo PokerCard.getHighValue(Rank.TWO)) {
@@ -180,14 +181,14 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
                         rankValues.sortDescending()
                         val key = rankValues.joinToString(" ")
 
-                        handRankMap[key] = MIN_TWO_PAIR_RANK + relativeHandRank--
+                        handRankMap[key] = twoPairHandRank--
                     }
                 }
             }
         }
 
         private fun initHandRankMapForPairs() {
-            var relativeHandRank: Int = NUM_PAIR_RANKS - 1
+            var pairHandRank: Int = MAX_PAIR_RANK
 
             for (pairCardRankValue in PokerCard.getHighValue(Rank.ACE) downTo PokerCard.getHighValue(Rank.TWO)) {
                 for (topKickerCardRankValue in PokerCard.getHighValue(Rank.ACE) downTo PokerCard.getHighValue(Rank.FOUR)) {
@@ -212,7 +213,7 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
                             rankValues.sortDescending()
                             val key = rankValues.joinToString(" ")
 
-                            handRankMap[key] = MIN_PAIR_RANK + relativeHandRank--
+                            handRankMap[key] = pairHandRank--
                         }
                     }
                 }
@@ -220,8 +221,10 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
         }
 
         private fun initHandRankMapForHighCardsFlushesStraightsAndStraightFlushes() {
-            var highCardRelativeHandRank: Int = NUM_HIGH_CARD_AND_FLUSH_RANKS - 1
-            var straightRelativeHandRank: Int = NUM_STRAIGHT_AND_STRAIGHT_FLUSH_RANKS - 1
+            var highCardHandRank: Int = MAX_HIGH_CARD_RANK
+            var flushHandRank: Int = MAX_FLUSH_RANK
+            var straightHandRank: Int = MAX_STRAIGHT_RANK
+            var straightFlushHandRank: Int = MAX_STRAIGHT_FLUSH_RANK
 
             val falseFiveHighStraightHandRankKey = arrayListOf(
                 PokerCard.getHighValue(Rank.ACE),
@@ -257,11 +260,11 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
                                 }
 
                                 if (highCardRankValue - fifthHighestCardRankValue == 4) {
-                                    handRankMap[key] = MIN_STRAIGHT_RANK + straightRelativeHandRank
-                                    handRankMap["$key$SUITED_SUFFIX"] = MIN_STRAIGHT_FLUSH_RANK + straightRelativeHandRank--
+                                    handRankMap[key] = straightHandRank--
+                                    handRankMap["$key$SUITED_SUFFIX"] = straightFlushHandRank--
                                 } else {
-                                    handRankMap[key] = MIN_HIGH_CARD_RANK + highCardRelativeHandRank
-                                    handRankMap["$key$SUITED_SUFFIX"] = MIN_FLUSH_RANK + highCardRelativeHandRank--
+                                    handRankMap[key] = highCardHandRank--
+                                    handRankMap["$key$SUITED_SUFFIX"] = flushHandRank--
                                 }
                             }
                         }
