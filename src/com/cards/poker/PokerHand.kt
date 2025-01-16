@@ -26,13 +26,13 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
 
         isSuited = suitSet.size == 1
 
-        val highCardHandRankMapKey = getHandRankMapKey()
+        val highCardHandRankMapKey = getHandRankMapKey(useHighValues = true)
 
         handRankMap[highCardHandRankMapKey]?.let { handRank ->
             return handRank
         }
 
-        val lowCardHandRankMapKey = getHandRankMapKey(false)
+        val lowCardHandRankMapKey = getHandRankMapKey(useHighValues = false)
 
         handRankMap[lowCardHandRankMapKey]?.let { handRank ->
             return handRank
