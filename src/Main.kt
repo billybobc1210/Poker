@@ -19,14 +19,6 @@ fun main() {
         val hand2 = PokerHand(cards2)
 
         val rank1 = hand1.rank
-        var x = hand1.rank
-//        hand1.rank = 5
-        x = hand1.rank
-        x = hand1.rank
-        x = hand1.rank
-        x = hand1.rank
-        x = hand1.rank
-        x = hand1.rank
         val rank2 = hand2.rank
 
         if ((rank1 < 10) && (rank2 < 10)) {
