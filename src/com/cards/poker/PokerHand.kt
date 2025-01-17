@@ -3,7 +3,7 @@ package com.cards.poker
 import com.cards.Rank
 import com.cards.Suit
 
-class PokerHand(private val cards: ArrayList<PokerCard>) {
+class PokerHand(val cards: ArrayList<PokerCard>) {
     val rank: Int = calculateHandRank()
     private var isSuited: Boolean = false
 

@@ -1,11 +1,11 @@
 package com.cards.poker
 
-class SevenCardPokerHand(val cards: ArrayList<PokerCard>) {
-    var bestFiveCardPokerHand: PokerHand = calculateBestFiverCardPokerHand()
+class BestFiveCardPokerHandEvaluator(val cards: ArrayList<PokerCard>) {
+    var bestFiveCardPokerHand: PokerHand = calculateBestFiveCardPokerHand()
 
-    private fun calculateBestFiverCardPokerHand(): PokerHand {
-        if (cards.size != 7) {
-            throw Exception("Not a 7 card poker hand")
+    private fun calculateBestFiveCardPokerHand(): PokerHand {
+        if ((cards.size < 5) || (cards.size > 7)) {
+            throw Exception("Must provide 5-7 cards")
         }
 
         val cardSet = mutableSetOf<PokerCard>()
@@ -14,17 +14,18 @@ class SevenCardPokerHand(val cards: ArrayList<PokerCard>) {
             cardSet.add(card)
         }
 
-        if (cardSet.size < 5) {
-            throw Exception("All 7 cards in hand must be unique")
+        if (cardSet.size < cards.size) {
+            throw Exception("All cards in hand must be unique")
         }
 
         var bestFiveCardPokerHand: PokerHand? = null
 
-        for (i in 0 .. 2) {
-            for (j in i+1..3) {
-                for (k in j+1..4) {
-                    for (l in k+1..5) {
-                        for (m in l+1..6) {
+        for (i in 0 .. cards.size-5) {
+            for (j in i+1..cards.size-3) {
+                for (k in j+1..cards.size-3) {
+                    for (l in k+1..cards.size-2) {
+                        for (m in l+1..cards.size-1) {
+//                            println("$i $j $k $l $m")
                             val pokerHand = PokerHand(
                                 arrayListOf(
                                     cards[i],
@@ -35,9 +36,7 @@ class SevenCardPokerHand(val cards: ArrayList<PokerCard>) {
                                 )
                             )
 
-                            if (bestFiveCardPokerHand == null) {
-                                bestFiveCardPokerHand = pokerHand
-                            } else if (bestFiveCardPokerHand.rank < pokerHand.rank) {
+                            if ((bestFiveCardPokerHand == null) || (bestFiveCardPokerHand.rank < pokerHand.rank)) {
                                 bestFiveCardPokerHand = pokerHand
                             }
                         }
