@@ -14,24 +14,4 @@ enum class Rank(val abbreviation: String) {
     QUEEN("Q"),
     KING("K"),
     ACE("A");
-
-    companion object {
-        fun allRanks(): Array<Rank> {
-            return arrayOf(
-                TWO,
-                THREE,
-                FOUR,
-                FIVE,
-                SIX,
-                SEVEN,
-                EIGHT,
-                NINE,
-                TEN,
-                JACK,
-                QUEEN,
-                KING,
-                ACE
-            )
-        }
-    }
 }

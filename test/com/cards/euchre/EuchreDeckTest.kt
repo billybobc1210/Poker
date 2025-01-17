@@ -31,7 +31,7 @@ class EuchreDeckTest {
         )
 
         euchreRanks.forEach { rank ->
-            Suit.allSuits().forEach { suit ->
+            enumValues<Suit>().forEach { suit ->
                 val card = StandardCard(rank, suit)
                 val cardFound = cardsDealt["$card"] ?: false
                 assertTrue(cardFound)
@@ -49,7 +49,7 @@ class EuchreDeckTest {
         )
 
         nonEuchreRanks.forEach { rank ->
-            Suit.allSuits().forEach { suit ->
+            enumValues<Suit>().forEach { suit ->
                 val card = StandardCard(rank, suit)
                 val cardFound = cardsDealt["$card"] ?: false
                 assertFalse(cardFound)

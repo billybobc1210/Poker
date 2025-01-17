@@ -53,6 +53,42 @@ class PokerHand(private val cards: ArrayList<PokerCard>) {
         return cardRankValues.joinToString(" ") + if (isSuited) SUITED_SUFFIX else ""
     }
 
+    public fun isHighCardHand(): Boolean {
+        return rank >= MIN_HIGH_CARD_RANK && rank <= MAX_HIGH_CARD_RANK
+    }
+
+    public fun isPair(): Boolean {
+        return rank >= MIN_PAIR_RANK && rank <= MAX_PAIR_RANK
+    }
+
+    public fun isTwoPair(): Boolean {
+        return rank >= MIN_TWO_PAIR_RANK && rank <= MAX_TWO_PAIR_RANK
+    }
+
+    public fun isThreeOfAKind(): Boolean {
+        return rank >= MIN_THREE_OF_A_KIND_RANK && rank <= MAX_THREE_OF_A_KIND_RANK
+    }
+
+    public fun isStraight(): Boolean {
+        return rank >= MIN_STRAIGHT_RANK && rank <= MAX_STRAIGHT_RANK
+    }
+
+    public fun isFlush(): Boolean {
+        return rank >= MIN_FLUSH_RANK && rank <= MAX_FLUSH_RANK
+    }
+
+    public fun isFullHouse(): Boolean {
+        return rank >= MIN_FULL_HOUSE_RANK && rank <= MAX_FULL_HOUSE_RANK
+    }
+
+    public fun isFourOfAKind(): Boolean {
+        return rank >= MIN_FOUR_OF_A_KIND_RANK && rank <= MAX_FOUR_OF_A_KIND_RANK
+    }
+
+    public fun isStraightFlush(): Boolean {
+        return rank >= MIN_STRAIGHT_FLUSH_RANK && rank <= MAX_STRAIGHT_FLUSH_RANK
+    }
+
     override fun toString(): String {
         return cards.fold("") { acc, card ->
             val prefix = if (acc == "") "" else " "

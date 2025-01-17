@@ -18,8 +18,8 @@ class StandardDeckTest {
             cardsDealt["$card"] = true
         }
 
-        Rank.allRanks().forEach { rank ->
-            Suit.allSuits().forEach { suit ->
+        enumValues<Rank>().forEach { rank ->
+            enumValues<Suit>().forEach { suit ->
                 val card = StandardCard(rank, suit)
                 val cardFound = cardsDealt["$card"] ?: false
                 assertTrue(cardFound)
