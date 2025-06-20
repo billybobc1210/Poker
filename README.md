@@ -33,17 +33,23 @@ mapped to an integer value in the range of 0-7461 representing its poker hand ra
 
 Some examples:
 
-handRankMap["7 5 4 3 2"] = 0                 // lowest possible hand in poker: 7 high with 5/4/3/2 kickers  
-...  
-handRankMap["13 13 13 3 2"] = 5721           // three-of-a-kind: 3 Kings with 3/2 kickers  
-...  
-handRankMap["9 7 6 3 2 SUITED"] = 5890       // flush: 9 high with 7/6/3/2 kickers  
-...  
-handRankMap["14 14 14 13 13"] = 7295         // full house: Aces full of Kings  
-...  
-handRankMap["14 14 14 14 13"] = 7451         // four of a kind: four Aces with a King kicker  
-...  
-handRankMap["14 13 12 11 10 SUITED] = 7461   // highest possible hand in poker: royal flush  
+// lowest possible hand in poker: 7 high with 5/4/3/2 kickers  
+handRankMap["7 5 4 3 2"] = 0
+  
+// three-of-a-kind: 3 Kings with 3/2 kickers  
+handRankMap["13 13 13 3 2"] = 5721           
+  
+// flush: 9 high with 7/6/3/2 kickers  
+handRankMap["9 7 6 3 2 SUITED"] = 5890  
+  
+// full house: Aces full of Kings   
+handRankMap["14 14 14 13 13"] = 7295  
+  
+// four of a kind: four Aces with a King kicker  
+handRankMap["14 14 14 14 13"] = 7451  
+  
+// highest possible hand in poker: royal flush  
+handRankMap["14 13 12 11 10 SUITED] = 7461   
  
 This strategy makes hand-evaluation very fast, since these relative ranks will only ever be 
 calculated once up front, and then to calculate the rank of any particular hand all that needs 
