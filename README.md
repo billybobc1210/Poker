@@ -49,7 +49,7 @@ handRankMap["14 14 14 13 13"] = 7295
 handRankMap["14 14 14 14 13"] = 7451  
   
 // highest possible hand in poker: royal flush  
-handRankMap["14 13 12 11 10 SUITED] = 7461   
+handRankMap["14 13 12 11 10 SUITED"] = 7461   
  
 This strategy makes hand-evaluation very fast, since these relative ranks will only ever be 
 calculated once up front, and then to calculate the rank of any particular hand all that needs 
