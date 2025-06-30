@@ -17,27 +17,25 @@ class PokerHand(val cards: ArrayList<PokerCard>) {
 
         isSuited = cards.map { card -> card.suit }.toSet().size == 1
 
-        val highCardHandRankMapKey = getHandRankMapKey(useHighValues = true)
+        val highCardHandRankMapKey = buildHandRankMapKey(
+            ArrayList(cards.map { card -> card.highValue }),
+            isSuited
+        )
 
         handRankMap[highCardHandRankMapKey]?.let { handRank ->
             return handRank
         }
 
-        val lowCardHandRankMapKey = getHandRankMapKey(useHighValues = false)
+        val lowCardHandRankMapKey = buildHandRankMapKey(
+            ArrayList(cards.map { card -> card.lowValue }),
+            isSuited
+        )
 
         handRankMap[lowCardHandRankMapKey]?.let { handRank ->
             return handRank
         }
 
         throw Exception("Invalid poker hand")
-    }
-
-    private fun getHandRankMapKey(useHighValues: Boolean = true): String {
-        val cardRankValues = ArrayList(cards.map { card -> if (useHighValues) card.highValue else card.lowValue })
-
-        cardRankValues.sortDescending()
-
-        return cardRankValues.joinToString(" ") + if (isSuited) SUITED_SUFFIX else ""
     }
 
     public fun isHighCardHand(): Boolean {
@@ -115,8 +113,17 @@ class PokerHand(val cards: ArrayList<PokerCard>) {
         const val MIN_STRAIGHT_FLUSH_RANK: Int = MAX_FOUR_OF_A_KIND_RANK + 1
         const val MAX_STRAIGHT_FLUSH_RANK: Int = MIN_STRAIGHT_FLUSH_RANK + NUM_STRAIGHT_FLUSH_RANKS - 1
         const val SUITED_SUFFIX: String = " SUITED"
+        const val FALSE_FIVE_HIGH_STRAIGHT_HAND_RANK_KEY = "14 5 4 3 2"
+        const val TRUE_FIVE_HIGH_STRAIGHT_HAND_RANK_KEY = "5 4 3 2 1"
+        const val TRUE_FIVE_HIGH_STRAIGHT_FLUSH_HAND_RANK_KEY = "$TRUE_FIVE_HIGH_STRAIGHT_HAND_RANK_KEY$SUITED_SUFFIX"
 
         private val handRankMap = mutableMapOf<String, Int>()
+
+        private fun buildHandRankMapKey(cardRankValues: ArrayList<Int>, isSuited: Boolean): String {
+            cardRankValues.sortDescending()
+
+            return cardRankValues.joinToString(" ") + if (isSuited) SUITED_SUFFIX else ""
+        }
 
         private fun initHandRankMapForFourOfAKindsAndFullHouses() {
             var fourOfAKindHandRank: Int = MAX_FOUR_OF_A_KIND_RANK
@@ -128,25 +135,27 @@ class PokerHand(val cards: ArrayList<PokerCard>) {
                         continue
                     }
 
-                    val fourOfAKindRankValues = arrayListOf(
-                        majorCardRankValue,
-                        majorCardRankValue,
-                        majorCardRankValue,
-                        majorCardRankValue,
-                        minorCardRankValue
+                    val fourOfAkindKey = buildHandRankMapKey(
+                        arrayListOf(
+                            majorCardRankValue,
+                            majorCardRankValue,
+                            majorCardRankValue,
+                            majorCardRankValue,
+                            minorCardRankValue
+                        ),
+                        false
                     )
-                    fourOfAKindRankValues.sortDescending()
-                    val fourOfAkindKey = fourOfAKindRankValues.joinToString(" ")
 
-                    val fullHouseRankValues = arrayListOf(
-                        majorCardRankValue,
-                        majorCardRankValue,
-                        majorCardRankValue,
-                        minorCardRankValue,
-                        minorCardRankValue
+                    val fullHouseKey = buildHandRankMapKey(
+                        arrayListOf(
+                            majorCardRankValue,
+                            majorCardRankValue,
+                            majorCardRankValue,
+                            minorCardRankValue,
+                            minorCardRankValue
+                        ),
+                        false
                     )
-                    fullHouseRankValues.sortDescending()
-                    val fullHouseKey = fullHouseRankValues.joinToString(" ")
 
                     handRankMap[fourOfAkindKey] = fourOfAKindHandRank--
                     handRankMap[fullHouseKey] = fullHouseHandRank--
@@ -166,15 +175,16 @@ class PokerHand(val cards: ArrayList<PokerCard>) {
                             continue
                         }
 
-                        val rankValues = arrayListOf(
-                            threeOfAKindCardRankValue,
-                            threeOfAKindCardRankValue,
-                            threeOfAKindCardRankValue,
-                            topKickerCardRankValue,
-                            bottomKickerCardRankValue
+                        val key = buildHandRankMapKey(
+                            arrayListOf(
+                                threeOfAKindCardRankValue,
+                                threeOfAKindCardRankValue,
+                                threeOfAKindCardRankValue,
+                                topKickerCardRankValue,
+                                bottomKickerCardRankValue
+                            ),
+                            false
                         )
-                        rankValues.sortDescending()
-                        val key = rankValues.joinToString(" ")
 
                         handRankMap[key] = threeOfAKindHandRank--
                     }
@@ -194,15 +204,16 @@ class PokerHand(val cards: ArrayList<PokerCard>) {
                             continue
                         }
 
-                        val rankValues = arrayListOf(
-                            topPairCardRankValue,
-                            topPairCardRankValue,
-                            bottomPairCardRankValue,
-                            bottomPairCardRankValue,
-                            kickerCardRankValue
+                        val key = buildHandRankMapKey(
+                            arrayListOf(
+                                topPairCardRankValue,
+                                topPairCardRankValue,
+                                bottomPairCardRankValue,
+                                bottomPairCardRankValue,
+                                kickerCardRankValue
+                            ),
+                            false
                         )
-                        rankValues.sortDescending()
-                        val key = rankValues.joinToString(" ")
 
                         handRankMap[key] = twoPairHandRank--
                     }
@@ -226,15 +237,16 @@ class PokerHand(val cards: ArrayList<PokerCard>) {
                                 continue
                             }
 
-                            val rankValues = arrayListOf(
-                                pairCardRankValue,
-                                pairCardRankValue,
-                                topKickerCardRankValue,
-                                middleKickerCardRankValue,
-                                bottomKickerCardRankValue
+                            val key = buildHandRankMapKey(
+                                arrayListOf(
+                                    pairCardRankValue,
+                                    pairCardRankValue,
+                                    topKickerCardRankValue,
+                                    middleKickerCardRankValue,
+                                    bottomKickerCardRankValue
+                                ),
+                                false
                             )
-                            rankValues.sortDescending()
-                            val key = rankValues.joinToString(" ")
 
                             handRankMap[key] = pairHandRank--
                         }
@@ -249,45 +261,31 @@ class PokerHand(val cards: ArrayList<PokerCard>) {
             var straightHandRank: Int = MAX_STRAIGHT_RANK
             var straightFlushHandRank: Int = MAX_STRAIGHT_FLUSH_RANK
 
-            val falseFiveHighStraightHandRankKey = arrayListOf(
-                PokerCard.getHighValue(Rank.ACE),
-                PokerCard.getHighValue(Rank.FIVE),
-                PokerCard.getHighValue(Rank.FOUR),
-                PokerCard.getHighValue(Rank.THREE),
-                PokerCard.getHighValue(Rank.TWO),
-            ).joinToString(" ")
-
-            val trueFiveHighStraightHandRankKey = arrayListOf(
-                PokerCard.getHighValue(Rank.FIVE),
-                PokerCard.getHighValue(Rank.FOUR),
-                PokerCard.getHighValue(Rank.THREE),
-                PokerCard.getHighValue(Rank.TWO),
-                PokerCard.getLowValue(Rank.ACE),
-            ).joinToString(" ")
-
             for (highCardRankValue in PokerCard.getHighValue(Rank.ACE) downTo PokerCard.getHighValue(Rank.SIX)) {
                 for (secondHighestCardRankValue in highCardRankValue - 1 downTo PokerCard.getHighValue(Rank.FIVE)) {
                     for (thirdHighestCardRankValue in secondHighestCardRankValue - 1 downTo PokerCard.getHighValue(Rank.FOUR)) {
                         for (fourthHighestCardRankValue in thirdHighestCardRankValue - 1 downTo PokerCard.getHighValue(Rank.THREE)) {
                             for (fifthHighestCardRankValue in fourthHighestCardRankValue - 1 downTo PokerCard.getHighValue((Rank.TWO))) {
-                                val key: String = arrayListOf(
+                                val cardRankValues = arrayListOf(
                                     highCardRankValue,
                                     secondHighestCardRankValue,
                                     thirdHighestCardRankValue,
                                     fourthHighestCardRankValue,
                                     fifthHighestCardRankValue
-                                ).joinToString(" ")
+                                )
+                                val key: String = buildHandRankMapKey(cardRankValues,false)
+                                val suitedKey: String = buildHandRankMapKey(cardRankValues,true)
 
-                                if (key == falseFiveHighStraightHandRankKey) {
+                                if (key == FALSE_FIVE_HIGH_STRAIGHT_HAND_RANK_KEY) {
                                     continue
                                 }
 
                                 if (highCardRankValue - fifthHighestCardRankValue == 4) {
                                     handRankMap[key] = straightHandRank--
-                                    handRankMap["$key$SUITED_SUFFIX"] = straightFlushHandRank--
+                                    handRankMap[suitedKey] = straightFlushHandRank--
                                 } else {
                                     handRankMap[key] = highCardHandRank--
-                                    handRankMap["$key$SUITED_SUFFIX"] = flushHandRank--
+                                    handRankMap[suitedKey] = flushHandRank--
                                 }
                             }
                         }
@@ -295,8 +293,8 @@ class PokerHand(val cards: ArrayList<PokerCard>) {
                 }
             }
 
-            handRankMap[trueFiveHighStraightHandRankKey] = MIN_STRAIGHT_RANK
-            handRankMap["$trueFiveHighStraightHandRankKey$SUITED_SUFFIX"] = MIN_STRAIGHT_FLUSH_RANK
+            handRankMap[TRUE_FIVE_HIGH_STRAIGHT_HAND_RANK_KEY] = MIN_STRAIGHT_RANK
+            handRankMap[TRUE_FIVE_HIGH_STRAIGHT_FLUSH_HAND_RANK_KEY] = MIN_STRAIGHT_FLUSH_RANK
         }
 
         init {
