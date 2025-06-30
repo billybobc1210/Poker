@@ -1,7 +1,6 @@
 package com.cards.poker
 
 import com.cards.Rank
-import com.cards.Suit
 
 class PokerHand(val cards: ArrayList<PokerCard>) {
     val rank: Int = calculateHandRank()
@@ -12,19 +11,11 @@ class PokerHand(val cards: ArrayList<PokerCard>) {
             throw Exception("Not a standard 5 card poker hand")
         }
 
-        val cardSet = mutableSetOf<PokerCard>()
-        val suitSet = mutableSetOf<Suit>()
-
-        cards.forEach { card ->
-            cardSet.add(card)
-            suitSet.add(card.suit)
-        }
-
-        if (cardSet.size < 5) {
+        if (cards.toSet().size < 5) {
             throw Exception("All 5 cards in hand must be unique")
         }
 
-        isSuited = suitSet.size == 1
+        isSuited = cards.map { card -> card.suit }.toSet().size == 1
 
         val highCardHandRankMapKey = getHandRankMapKey(useHighValues = true)
 
@@ -42,11 +33,7 @@ class PokerHand(val cards: ArrayList<PokerCard>) {
     }
 
     private fun getHandRankMapKey(useHighValues: Boolean = true): String {
-        val cardRankValues = arrayListOf<Int>()
-
-        cards.forEach { card ->
-            cardRankValues.add(if (useHighValues) card.highValue else card.lowValue)
-        }
+        val cardRankValues = ArrayList(cards.map { card -> if (useHighValues) card.highValue else card.lowValue })
 
         cardRankValues.sortDescending()
 
