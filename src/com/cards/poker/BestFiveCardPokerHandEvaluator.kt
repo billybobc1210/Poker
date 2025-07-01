@@ -8,13 +8,7 @@ class BestFiveCardPokerHandEvaluator(val cards: ArrayList<PokerCard>) {
             throw Exception("Must provide 5-7 cards")
         }
 
-        val cardSet = mutableSetOf<PokerCard>()
-
-        cards.forEach { card ->
-            cardSet.add(card)
-        }
-
-        if (cardSet.size < cards.size) {
+        if (cards.toSet().size < cards.size) {
             throw Exception("All cards in hand must be unique")
         }
 
