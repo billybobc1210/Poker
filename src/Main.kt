@@ -1,7 +1,6 @@
 import com.cards.StandardDeck
 import com.cards.poker.PokerCard
-import com.cards.poker.PokerHand
-import com.cards.poker.SevenCardPokerHand
+import com.cards.poker.BestFiveCardPokerHandEvaluator
 
 fun main() {
     val deck = StandardDeck()
@@ -14,9 +13,9 @@ fun main() {
             c1.add(PokerCard(deck.dealTopCard()))
         }
 
-        val h1 = SevenCardPokerHand(c1)
-        val bestPokerHand = h1.bestFiveCardPokerHand
-        println("$h1 -> $bestPokerHand (${bestPokerHand.rank})")
+        val bestFiveCardPokerHandEvaluator = BestFiveCardPokerHandEvaluator(c1)
+        val bestPokerHand = bestFiveCardPokerHandEvaluator.bestFiveCardPokerHand
+        println("$bestFiveCardPokerHandEvaluator -> $bestPokerHand (${bestPokerHand.rank})")
 
 
 //        val cards1 = arrayListOf<PokerCard>()
