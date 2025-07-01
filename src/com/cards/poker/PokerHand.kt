@@ -4,7 +4,6 @@ import com.cards.Rank
 
 class PokerHand(val cards: ArrayList<PokerCard>) {
     val rank: Int = calculateHandRank()
-    private var isSuited: Boolean = false
 
     private fun calculateHandRank(): Int {
         if (cards.size != 5) {
@@ -15,7 +14,7 @@ class PokerHand(val cards: ArrayList<PokerCard>) {
             throw Exception("All 5 cards in hand must be unique")
         }
 
-        isSuited = cards.map { card -> card.suit }.toSet().size == 1
+        val isSuited = cards.map { card -> card.suit }.toSet().size == 1
 
         val highCardHandRankMapKey = buildHandRankMapKey(
             ArrayList(cards.map { card -> card.highValue }),
