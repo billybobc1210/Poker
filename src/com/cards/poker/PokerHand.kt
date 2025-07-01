@@ -16,22 +16,16 @@ class PokerHand(val cards: ArrayList<PokerCard>) {
 
         val isSuited = cards.map { card -> card.suit }.toSet().size == 1
 
-        val highCardHandRankMapKey = buildHandRankMapKey(
-            ArrayList(cards.map { card -> card.highValue }),
-            isSuited
-        )
+        val highCardHandRankMapKey = buildHandRankMapKey(ArrayList(cards.map { card -> card.highValue }), isSuited)
 
-        handRankMap[highCardHandRankMapKey]?.let { handRank ->
-            return handRank
+        handRankMap[highCardHandRankMapKey]?.let { result ->
+            return result
         }
 
-        val lowCardHandRankMapKey = buildHandRankMapKey(
-            ArrayList(cards.map { card -> card.lowValue }),
-            isSuited
-        )
+        val lowCardHandRankMapKey = buildHandRankMapKey(ArrayList(cards.map { card -> card.lowValue }), isSuited)
 
-        handRankMap[lowCardHandRankMapKey]?.let { handRank ->
-            return handRank
+        handRankMap[lowCardHandRankMapKey]?.let { result ->
+            return result
         }
 
         throw Exception("Invalid poker hand")
