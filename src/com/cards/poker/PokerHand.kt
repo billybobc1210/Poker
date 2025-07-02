@@ -75,27 +75,27 @@ class PokerHand(val cards: ArrayList<PokerCard>) {
     }
 
     companion object {
-        const val NUM_HIGH_CARD_AND_FLUSH_RANKS: Int = 1277
+        const val NUM_HIGH_CARD_AND_FLUSH_RANKS: Int = 1277 // CHOOSE(13,5) - 10
         const val NUM_HIGH_CARD_RANKS: Int = NUM_HIGH_CARD_AND_FLUSH_RANKS
         const val MIN_HIGH_CARD_RANK: Int = 0
         const val MAX_HIGH_CARD_RANK: Int = MIN_HIGH_CARD_RANK + NUM_HIGH_CARD_RANKS - 1
-        const val NUM_PAIR_RANKS: Int = 2860
+        const val NUM_PAIR_RANKS: Int = 2860 // CHOOSE(13,1) * CHOOSE(12,3)
         const val MIN_PAIR_RANK: Int = MAX_HIGH_CARD_RANK + 1
         const val MAX_PAIR_RANK: Int = MIN_PAIR_RANK + NUM_PAIR_RANKS - 1
-        const val NUM_TWO_PAIR_RANKS = 858
+        const val NUM_TWO_PAIR_RANKS = 858 // CHOOSE(13,2) * CHOOSE(11,1)
         const val MIN_TWO_PAIR_RANK: Int = MAX_PAIR_RANK + 1
         const val MAX_TWO_PAIR_RANK: Int = MIN_TWO_PAIR_RANK + NUM_TWO_PAIR_RANKS - 1
-        const val NUM_THREE_OF_A_KIND_RANKS: Int = 858
+        const val NUM_THREE_OF_A_KIND_RANKS: Int = 858 // CHOOSE(13,1) * CHOOSE(12,2)
         const val MIN_THREE_OF_A_KIND_RANK: Int = MAX_TWO_PAIR_RANK + 1
         const val MAX_THREE_OF_A_KIND_RANK: Int = MIN_THREE_OF_A_KIND_RANK + NUM_THREE_OF_A_KIND_RANKS - 1
-        const val NUM_STRAIGHT_AND_STRAIGHT_FLUSH_RANKS: Int = 10
+        const val NUM_STRAIGHT_AND_STRAIGHT_FLUSH_RANKS: Int = 10 // 5-high through Ace-high
         const val NUM_STRAIGHT_RANKS: Int = NUM_STRAIGHT_AND_STRAIGHT_FLUSH_RANKS
         const val MIN_STRAIGHT_RANK: Int = MAX_THREE_OF_A_KIND_RANK + 1
         const val MAX_STRAIGHT_RANK: Int = MIN_STRAIGHT_RANK + NUM_STRAIGHT_RANKS - 1
         const val NUM_FLUSH_RANKS: Int = NUM_HIGH_CARD_AND_FLUSH_RANKS
         const val MIN_FLUSH_RANK: Int = MAX_STRAIGHT_RANK + 1
         const val MAX_FLUSH_RANK: Int = MIN_FLUSH_RANK + NUM_FLUSH_RANKS - 1
-        const val NUM_FOUR_OF_A_KIND_AND_FULL_HOUSE_RANKS: Int = 156
+        const val NUM_FOUR_OF_A_KIND_AND_FULL_HOUSE_RANKS: Int = 156 // CHOOSE(13,1) * CHOOSE(12,1)
         const val NUM_FULL_HOUSE_RANKS: Int = NUM_FOUR_OF_A_KIND_AND_FULL_HOUSE_RANKS
         const val MIN_FULL_HOUSE_RANK: Int = MAX_FLUSH_RANK + 1
         const val MAX_FULL_HOUSE_RANK: Int = MIN_FULL_HOUSE_RANK + NUM_FULL_HOUSE_RANKS - 1
