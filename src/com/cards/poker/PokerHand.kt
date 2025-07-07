@@ -163,8 +163,7 @@ class PokerHand(val cards: ArrayList<PokerCard>) {
                 for (topKickerCardRankValue in PokerCard.getHighValue(Rank.ACE) downTo PokerCard.getHighValue(Rank.THREE)) {
                     for (bottomKickerCardRankValue in topKickerCardRankValue - 1 downTo PokerCard.getHighValue(Rank.TWO)) {
                         if ((threeOfAKindCardRankValue == topKickerCardRankValue) ||
-                            (threeOfAKindCardRankValue == bottomKickerCardRankValue) ||
-                            (topKickerCardRankValue == bottomKickerCardRankValue)) {
+                            (threeOfAKindCardRankValue == bottomKickerCardRankValue)) {
                             continue
                         }
 
@@ -191,8 +190,7 @@ class PokerHand(val cards: ArrayList<PokerCard>) {
             for (topPairCardRankValue in PokerCard.getHighValue(Rank.ACE) downTo PokerCard.getHighValue(Rank.THREE)) {
                 for (bottomPairCardRankValue in topPairCardRankValue - 1 downTo PokerCard.getHighValue(Rank.TWO)) {
                     for (kickerCardRankValue in PokerCard.getHighValue(Rank.ACE) downTo PokerCard.getHighValue(Rank.TWO)) {
-                        if ((topPairCardRankValue == bottomPairCardRankValue) ||
-                            (topPairCardRankValue == kickerCardRankValue) ||
+                        if ((topPairCardRankValue == kickerCardRankValue) ||
                             (bottomPairCardRankValue == kickerCardRankValue)) {
                             continue
                         }
@@ -223,10 +221,7 @@ class PokerHand(val cards: ArrayList<PokerCard>) {
                         for (bottomKickerCardRankValue in middleKickerCardRankValue - 1 downTo PokerCard.getHighValue(Rank.TWO)) {
                             if ((pairCardRankValue == topKickerCardRankValue) ||
                                 (pairCardRankValue == middleKickerCardRankValue) ||
-                                (pairCardRankValue == bottomKickerCardRankValue) ||
-                                (topKickerCardRankValue == middleKickerCardRankValue) ||
-                                (topKickerCardRankValue == bottomKickerCardRankValue) ||
-                                (middleKickerCardRankValue == bottomKickerCardRankValue)) {
+                                (pairCardRankValue == bottomKickerCardRankValue)) {
                                 continue
                             }
 
