@@ -2,16 +2,12 @@ package com.cards.poker
 
 import com.cards.Rank
 
-class PokerHand(val cards: ArrayList<PokerCard>) {
+class PokerHand(val cards: Set<PokerCard>) {
     val rank: Int = calculateHandRank()
 
     private fun calculateHandRank(): Int {
         if (cards.size != 5) {
             throw Exception("Not a standard 5 card poker hand")
-        }
-
-        if (cards.toSet().size < 5) {
-            throw Exception("All 5 cards in hand must be unique")
         }
 
         val isSuited = cards.map { card -> card.suit }.toSet().size == 1

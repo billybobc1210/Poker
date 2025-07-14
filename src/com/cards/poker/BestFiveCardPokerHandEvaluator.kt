@@ -1,6 +1,6 @@
 package com.cards.poker
 
-class BestFiveCardPokerHandEvaluator(val cards: ArrayList<PokerCard>) {
+class BestFiveCardPokerHandEvaluator(val cards: Set<PokerCard>) {
     var bestFiveCardPokerHand: PokerHand = calculateBestFiveCardPokerHand()
 
     private fun calculateBestFiveCardPokerHand(): PokerHand {
@@ -8,25 +8,23 @@ class BestFiveCardPokerHandEvaluator(val cards: ArrayList<PokerCard>) {
             throw Exception("Must provide 5-7 cards")
         }
 
-        if (cards.toSet().size < cards.size) {
-            throw Exception("All cards in hand must be unique")
-        }
+        val cardList = cards.map { it }
 
         var bestFiveCardPokerHand: PokerHand? = null
 
-        for (i in 0 .. cards.size-5) {
-            for (j in i+1..cards.size-3) {
-                for (k in j+1..cards.size-3) {
-                    for (l in k+1..cards.size-2) {
-                        for (m in l+1..cards.size-1) {
+        for (i in 0 .. cardList.size-5) {
+            for (j in i+1..cardList.size-3) {
+                for (k in j+1..cardList.size-3) {
+                    for (l in k+1..cardList.size-2) {
+                        for (m in l+1..cardList.size-1) {
 //                            println("$i $j $k $l $m")
                             val pokerHand = PokerHand(
-                                arrayListOf(
-                                    cards[i],
-                                    cards[j],
-                                    cards[k],
-                                    cards[l],
-                                    cards[m]
+                                setOf(
+                                    cardList[i],
+                                    cardList[j],
+                                    cardList[k],
+                                    cardList[l],
+                                    cardList[m]
                                 )
                             )
 

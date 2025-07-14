@@ -10,7 +10,7 @@ class BestFiveCardPokerHandEvaluatorTest {
     @Test
     fun tooManyCardsTest() {
         var validHand = true
-        val cards = arrayListOf(
+        val cards = setOf(
             PokerCard(StandardCard(Rank.ACE, Suit.SPADES)),
             PokerCard(StandardCard(Rank.KING, Suit.SPADES)),
             PokerCard(StandardCard(Rank.QUEEN, Suit.SPADES)),
@@ -33,7 +33,7 @@ class BestFiveCardPokerHandEvaluatorTest {
     @Test
     fun tooFewCardsTest() {
         var validHand = true
-        val cards = arrayListOf(
+        val cards = setOf(
             PokerCard(StandardCard(Rank.QUEEN, Suit.SPADES)),
             PokerCard(StandardCard(Rank.JACK, Suit.SPADES)),
             PokerCard(StandardCard(Rank.TEN, Suit.SPADES)),
@@ -50,12 +50,53 @@ class BestFiveCardPokerHandEvaluatorTest {
     }
 
     @Test
-    fun duplicateCardsTest() {
+    fun duplicateCardsTest1() {
         var validHand = true
-        val cards = arrayListOf(
+        val cards = setOf(
             PokerCard(StandardCard(Rank.ACE, Suit.SPADES)),
             PokerCard(StandardCard(Rank.KING, Suit.DIAMONDS)),
             PokerCard(StandardCard(Rank.TEN, Suit.CLUBS)),
+            PokerCard(StandardCard(Rank.FIVE, Suit.DIAMONDS)),
+            PokerCard(StandardCard(Rank.FIVE, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.NINE, Suit.HEARTS)),
+            PokerCard(StandardCard(Rank.NINE, Suit.HEARTS)),
+        )
+
+        try {
+            BestFiveCardPokerHandEvaluator(cards)
+        } catch (e: Exception) {
+            validHand = false
+        }
+
+        assertTrue(validHand)
+    }
+
+    @Test
+    fun duplicateCardsTest2() {
+        var validHand = true
+        val cards = setOf(
+            PokerCard(StandardCard(Rank.ACE, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.TEN, Suit.CLUBS)),
+            PokerCard(StandardCard(Rank.FIVE, Suit.DIAMONDS)),
+            PokerCard(StandardCard(Rank.FIVE, Suit.SPADES)),
+            PokerCard(StandardCard(Rank.NINE, Suit.HEARTS)),
+            PokerCard(StandardCard(Rank.NINE, Suit.HEARTS)),
+        )
+
+        try {
+            BestFiveCardPokerHandEvaluator(cards)
+        } catch (e: Exception) {
+            validHand = false
+        }
+
+        assertTrue(validHand)
+    }
+
+    @Test
+    fun duplicateCardsTest3() {
+        var validHand = true
+        val cards = setOf(
+            PokerCard(StandardCard(Rank.ACE, Suit.SPADES)),
             PokerCard(StandardCard(Rank.FIVE, Suit.DIAMONDS)),
             PokerCard(StandardCard(Rank.FIVE, Suit.SPADES)),
             PokerCard(StandardCard(Rank.NINE, Suit.HEARTS)),
@@ -73,7 +114,7 @@ class BestFiveCardPokerHandEvaluatorTest {
 
     @Test
     fun sevenCardHandTest1() {
-        var cardsForSevenCardHand = arrayListOf(
+        var cardsForSevenCardHand = setOf(
             PokerCard(StandardCard(Rank.ACE, Suit.SPADES)),
             PokerCard(StandardCard(Rank.KING, Suit.DIAMONDS)),
             PokerCard(StandardCard(Rank.TEN, Suit.CLUBS)),
@@ -84,7 +125,7 @@ class BestFiveCardPokerHandEvaluatorTest {
         )
         var bestFiveCardPokerHandEvaluator = BestFiveCardPokerHandEvaluator(cardsForSevenCardHand)
 
-        var expectedBestFiveCardHandCards = arrayListOf(
+        var expectedBestFiveCardHandCards = setOf(
             PokerCard(StandardCard(Rank.ACE, Suit.SPADES)),
             PokerCard(StandardCard(Rank.KING, Suit.DIAMONDS)),
             PokerCard(StandardCard(Rank.TEN, Suit.CLUBS)),
@@ -98,7 +139,7 @@ class BestFiveCardPokerHandEvaluatorTest {
 
     @Test
     fun sevenCardHandTest2() {
-        var cardsForSevenCardHand = arrayListOf(
+        var cardsForSevenCardHand = setOf(
             PokerCard(StandardCard(Rank.ACE, Suit.SPADES)),
             PokerCard(StandardCard(Rank.KING, Suit.DIAMONDS)),
             PokerCard(StandardCard(Rank.TEN, Suit.DIAMONDS)),
@@ -109,7 +150,7 @@ class BestFiveCardPokerHandEvaluatorTest {
         )
         var bestFiveCardPokerHandEvaluator = BestFiveCardPokerHandEvaluator(cardsForSevenCardHand)
 
-        var expectedBestFiveCardHandCards = arrayListOf(
+        var expectedBestFiveCardHandCards = setOf(
             PokerCard(StandardCard(Rank.KING, Suit.DIAMONDS)),
             PokerCard(StandardCard(Rank.TEN, Suit.DIAMONDS)),
             PokerCard(StandardCard(Rank.ACE, Suit.DIAMONDS)),
@@ -123,7 +164,7 @@ class BestFiveCardPokerHandEvaluatorTest {
 
     @Test
     fun sevenCardHandTest3() {
-        var cardsForSevenCardHand = arrayListOf(
+        var cardsForSevenCardHand = setOf(
             PokerCard(StandardCard(Rank.ACE, Suit.SPADES)),
             PokerCard(StandardCard(Rank.SEVEN, Suit.DIAMONDS)),
             PokerCard(StandardCard(Rank.ACE, Suit.DIAMONDS)),
@@ -134,7 +175,7 @@ class BestFiveCardPokerHandEvaluatorTest {
         )
         var bestFiveCardPokerHandEvaluator = BestFiveCardPokerHandEvaluator(cardsForSevenCardHand)
 
-        var expectedBestFiveCardHandCards = arrayListOf(
+        var expectedBestFiveCardHandCards = setOf(
             PokerCard(StandardCard(Rank.ACE, Suit.SPADES)),
             PokerCard(StandardCard(Rank.ACE, Suit.DIAMONDS)),
             PokerCard(StandardCard(Rank.SEVEN, Suit.CLUBS)),
@@ -148,7 +189,7 @@ class BestFiveCardPokerHandEvaluatorTest {
 
     @Test
     fun fiveCardHandTest() {
-        var fiveCardHand = arrayListOf(
+        var fiveCardHand = setOf(
             PokerCard(StandardCard(Rank.ACE, Suit.SPADES)),
             PokerCard(StandardCard(Rank.SEVEN, Suit.DIAMONDS)),
             PokerCard(StandardCard(Rank.ACE, Suit.DIAMONDS)),
@@ -163,7 +204,7 @@ class BestFiveCardPokerHandEvaluatorTest {
 
     @Test
     fun sixCardHandTest() {
-        var sixCardHand = arrayListOf(
+        var sixCardHand = setOf(
             PokerCard(StandardCard(Rank.ACE, Suit.SPADES)),
             PokerCard(StandardCard(Rank.SEVEN, Suit.DIAMONDS)),
             PokerCard(StandardCard(Rank.ACE, Suit.DIAMONDS)),
@@ -173,7 +214,7 @@ class BestFiveCardPokerHandEvaluatorTest {
         )
         var bestFiveCardPokerHandEvaluator = BestFiveCardPokerHandEvaluator(sixCardHand)
 
-        var expectedBestFiveCardPokerHandCards = arrayListOf(
+        var expectedBestFiveCardPokerHandCards = setOf(
             PokerCard(StandardCard(Rank.ACE, Suit.SPADES)),
             PokerCard(StandardCard(Rank.SEVEN, Suit.DIAMONDS)),
             PokerCard(StandardCard(Rank.ACE, Suit.DIAMONDS)),
