@@ -5,14 +5,13 @@ import com.cards.StandardCard
 class BestFiveCardPokerHandEvaluator(val cards: Set<StandardCard>) {
     var bestFiveCardPokerHand: PokerHand = calculateBestFiveCardPokerHand()
 
+    init {
+        require((cards.size >= 5) && (cards.size <= 7))
+    }
+
     private fun calculateBestFiveCardPokerHand(): PokerHand {
-        if ((cards.size < 5) || (cards.size > 7)) {
-            throw Exception("Must provide 5-7 cards")
-        }
-
-        val cardList = cards.map { it }
-
         var bestFiveCardPokerHand: PokerHand? = null
+        val cardList = cards.map { it }
 
         for (i in 0 .. cardList.size-5) {
             for (j in i+1..cardList.size-3) {

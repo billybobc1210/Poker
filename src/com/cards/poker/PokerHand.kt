@@ -6,11 +6,11 @@ import com.cards.StandardCard
 class PokerHand(val cards: Set<StandardCard>) {
     val rank: Int = calculateHandRank()
 
-    private fun calculateHandRank(): Int {
-        if (cards.size != 5) {
-            throw Exception("Not a standard 5 card poker hand")
-        }
+    init {
+        require(cards.size == 5) { "Not a standard 5 card poker hand" }
+    }
 
+    private fun calculateHandRank(): Int {
         val isSuited = cards.map { card -> card.suit }.toSet().size == 1
 
         val highCardHandRankMapKey = buildHandRankMapKey(ArrayList(cards.map { card -> highValue(card.rank) }), isSuited)
