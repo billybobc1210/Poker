@@ -1,8 +1,9 @@
 package com.cards.poker
 
 import com.cards.Rank
+import com.cards.StandardCard
 
-class PokerHand(val cards: Set<PokerCard>) {
+class PokerHand(val cards: Set<StandardCard>) {
     val rank: Int = calculateHandRank()
 
     private fun calculateHandRank(): Int {
@@ -12,13 +13,13 @@ class PokerHand(val cards: Set<PokerCard>) {
 
         val isSuited = cards.map { card -> card.suit }.toSet().size == 1
 
-        val highCardHandRankMapKey = buildHandRankMapKey(ArrayList(cards.map { card -> card.highValue }), isSuited)
+        val highCardHandRankMapKey = buildHandRankMapKey(ArrayList(cards.map { card -> highValue(card.rank) }), isSuited)
 
         handRankMap[highCardHandRankMapKey]?.let { result ->
             return result
         }
 
-        val lowCardHandRankMapKey = buildHandRankMapKey(ArrayList(cards.map { card -> card.lowValue }), isSuited)
+        val lowCardHandRankMapKey = buildHandRankMapKey(ArrayList(cards.map { card -> lowValue(card.rank) }), isSuited)
 
         handRankMap[lowCardHandRankMapKey]?.let { result ->
             return result
@@ -118,8 +119,8 @@ class PokerHand(val cards: Set<PokerCard>) {
             var fourOfAKindHandRank: Int = MAX_FOUR_OF_A_KIND_RANK
             var fullHouseHandRank: Int = MAX_FULL_HOUSE_RANK
 
-            for (majorCardRankValue in PokerCard.getHighValue(Rank.ACE) downTo PokerCard.getHighValue(Rank.TWO)) {
-                for (minorCardRankValue in PokerCard.getHighValue(Rank.ACE) downTo PokerCard.getHighValue(Rank.TWO)) {
+            for (majorCardRankValue in highValue(Rank.ACE) downTo highValue(Rank.TWO)) {
+                for (minorCardRankValue in highValue(Rank.ACE) downTo highValue(Rank.TWO)) {
                     if (majorCardRankValue == minorCardRankValue) {
                         continue
                     }
@@ -155,9 +156,9 @@ class PokerHand(val cards: Set<PokerCard>) {
         private fun initHandRankMapForThreeOfAKinds() {
             var threeOfAKindHandRank: Int = MAX_THREE_OF_A_KIND_RANK
 
-            for (threeOfAKindCardRankValue in PokerCard.getHighValue(Rank.ACE) downTo PokerCard.getHighValue(Rank.TWO)) {
-                for (topKickerCardRankValue in PokerCard.getHighValue(Rank.ACE) downTo PokerCard.getHighValue(Rank.THREE)) {
-                    for (bottomKickerCardRankValue in topKickerCardRankValue - 1 downTo PokerCard.getHighValue(Rank.TWO)) {
+            for (threeOfAKindCardRankValue in highValue(Rank.ACE) downTo highValue(Rank.TWO)) {
+                for (topKickerCardRankValue in highValue(Rank.ACE) downTo highValue(Rank.THREE)) {
+                    for (bottomKickerCardRankValue in topKickerCardRankValue - 1 downTo highValue(Rank.TWO)) {
                         if ((threeOfAKindCardRankValue == topKickerCardRankValue) ||
                             (threeOfAKindCardRankValue == bottomKickerCardRankValue)) {
                             continue
@@ -183,9 +184,9 @@ class PokerHand(val cards: Set<PokerCard>) {
         private fun initHandRankMapForTwoPairs() {
             var twoPairHandRank: Int = MAX_TWO_PAIR_RANK
 
-            for (topPairCardRankValue in PokerCard.getHighValue(Rank.ACE) downTo PokerCard.getHighValue(Rank.THREE)) {
-                for (bottomPairCardRankValue in topPairCardRankValue - 1 downTo PokerCard.getHighValue(Rank.TWO)) {
-                    for (kickerCardRankValue in PokerCard.getHighValue(Rank.ACE) downTo PokerCard.getHighValue(Rank.TWO)) {
+            for (topPairCardRankValue in highValue(Rank.ACE) downTo highValue(Rank.THREE)) {
+                for (bottomPairCardRankValue in topPairCardRankValue - 1 downTo highValue(Rank.TWO)) {
+                    for (kickerCardRankValue in highValue(Rank.ACE) downTo highValue(Rank.TWO)) {
                         if ((topPairCardRankValue == kickerCardRankValue) ||
                             (bottomPairCardRankValue == kickerCardRankValue)) {
                             continue
@@ -211,10 +212,10 @@ class PokerHand(val cards: Set<PokerCard>) {
         private fun initHandRankMapForPairs() {
             var pairHandRank: Int = MAX_PAIR_RANK
 
-            for (pairCardRankValue in PokerCard.getHighValue(Rank.ACE) downTo PokerCard.getHighValue(Rank.TWO)) {
-                for (topKickerCardRankValue in PokerCard.getHighValue(Rank.ACE) downTo PokerCard.getHighValue(Rank.FOUR)) {
-                    for (middleKickerCardRankValue in topKickerCardRankValue - 1 downTo PokerCard.getHighValue(Rank.THREE)) {
-                        for (bottomKickerCardRankValue in middleKickerCardRankValue - 1 downTo PokerCard.getHighValue(Rank.TWO)) {
+            for (pairCardRankValue in highValue(Rank.ACE) downTo highValue(Rank.TWO)) {
+                for (topKickerCardRankValue in highValue(Rank.ACE) downTo highValue(Rank.FOUR)) {
+                    for (middleKickerCardRankValue in topKickerCardRankValue - 1 downTo highValue(Rank.THREE)) {
+                        for (bottomKickerCardRankValue in middleKickerCardRankValue - 1 downTo highValue(Rank.TWO)) {
                             if ((pairCardRankValue == topKickerCardRankValue) ||
                                 (pairCardRankValue == middleKickerCardRankValue) ||
                                 (pairCardRankValue == bottomKickerCardRankValue)) {
@@ -245,11 +246,11 @@ class PokerHand(val cards: Set<PokerCard>) {
             var straightHandRank: Int = MAX_STRAIGHT_RANK
             var straightFlushHandRank: Int = MAX_STRAIGHT_FLUSH_RANK
 
-            for (highCardRankValue in PokerCard.getHighValue(Rank.ACE) downTo PokerCard.getHighValue(Rank.SIX)) {
-                for (secondHighestCardRankValue in highCardRankValue - 1 downTo PokerCard.getHighValue(Rank.FIVE)) {
-                    for (thirdHighestCardRankValue in secondHighestCardRankValue - 1 downTo PokerCard.getHighValue(Rank.FOUR)) {
-                        for (fourthHighestCardRankValue in thirdHighestCardRankValue - 1 downTo PokerCard.getHighValue(Rank.THREE)) {
-                            for (fifthHighestCardRankValue in fourthHighestCardRankValue - 1 downTo PokerCard.getHighValue((Rank.TWO))) {
+            for (highCardRankValue in highValue(Rank.ACE) downTo highValue(Rank.SIX)) {
+                for (secondHighestCardRankValue in highCardRankValue - 1 downTo highValue(Rank.FIVE)) {
+                    for (thirdHighestCardRankValue in secondHighestCardRankValue - 1 downTo highValue(Rank.FOUR)) {
+                        for (fourthHighestCardRankValue in thirdHighestCardRankValue - 1 downTo highValue(Rank.THREE)) {
+                            for (fifthHighestCardRankValue in fourthHighestCardRankValue - 1 downTo highValue((Rank.TWO))) {
                                 val cardRankValues = arrayListOf(
                                     highCardRankValue,
                                     secondHighestCardRankValue,
@@ -279,6 +280,14 @@ class PokerHand(val cards: Set<PokerCard>) {
 
             handRankMap[TRUE_FIVE_HIGH_STRAIGHT_HAND_RANK_KEY] = MIN_STRAIGHT_RANK
             handRankMap[TRUE_FIVE_HIGH_STRAIGHT_FLUSH_HAND_RANK_KEY] = MIN_STRAIGHT_FLUSH_RANK
+        }
+
+        private fun highValue(rank: Rank): Int {
+            return rank.value
+        }
+
+        private fun lowValue(rank: Rank): Int {
+            return if (rank == Rank.ACE) Rank.TWO.value - 1 else rank.value
         }
 
         init {

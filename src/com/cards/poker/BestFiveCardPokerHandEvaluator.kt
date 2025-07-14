@@ -1,6 +1,8 @@
 package com.cards.poker
 
-class BestFiveCardPokerHandEvaluator(val cards: Set<PokerCard>) {
+import com.cards.StandardCard
+
+class BestFiveCardPokerHandEvaluator(val cards: Set<StandardCard>) {
     var bestFiveCardPokerHand: PokerHand = calculateBestFiveCardPokerHand()
 
     private fun calculateBestFiveCardPokerHand(): PokerHand {

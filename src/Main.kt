@@ -2,7 +2,6 @@ import com.cards.Rank
 import com.cards.StandardCard
 import com.cards.StandardDeck
 import com.cards.Suit
-import com.cards.poker.PokerCard
 import com.cards.poker.BestFiveCardPokerHandEvaluator
 
 fun main() {
@@ -10,17 +9,17 @@ fun main() {
     for (i in 1..1000) {
         deck.shuffle()
 
-        val c1 = mutableSetOf<PokerCard>()
+        val c1 = mutableSetOf<StandardCard>()
 
         for (j in 1 .. 7) {
-            c1.add(PokerCard(deck.dealTopCard()))
+            c1.add(deck.dealTopCard())
         }
 
         val bestFiveCardPokerHandEvaluator = BestFiveCardPokerHandEvaluator(c1)
         val bestPokerHand = bestFiveCardPokerHandEvaluator.bestFiveCardPokerHand
         println("$bestFiveCardPokerHandEvaluator -> $bestPokerHand (${bestPokerHand.rank})")
 
-        println(PokerCard(StandardCard(Rank.SIX, Suit.HEARTS)))
+        println(StandardCard(Rank.SIX, Suit.HEARTS))
 
 
 //        val cards1 = arrayListOf<PokerCard>()
