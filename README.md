@@ -23,7 +23,7 @@ The work horse of this program is the class:
 
 PokerHand.kt
 
-In this class, the Kotlin 'init' method gets called statically on the first 
+In this class, the companion object's static 'init' method gets called on the first 
 instantiation of the class.  This method then initializes the static hash map variable 
 'handRankMap'.  The keys of this map will be a string representation of a
 poker hand.  The format of the key is the numeric rank of each card in the 
