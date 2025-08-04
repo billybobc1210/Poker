@@ -13,13 +13,13 @@ class PokerHand(val cards: Set<StandardCard>) {
     private fun calculateHandRank(): Int {
         val isSuited = cards.map { card -> card.suit }.toSet().size == 1
 
-        val highCardHandRankMapKey = buildHandRankMapKey(ArrayList(cards.map { card -> highValue(card.rank) }), isSuited)
+        val highCardHandRankMapKey = buildHandRankMapKey(cards.map { card -> highValue(card.rank) }, isSuited)
 
         handRankMap[highCardHandRankMapKey]?.let { result ->
             return result
         }
 
-        val lowCardHandRankMapKey = buildHandRankMapKey(ArrayList(cards.map { card -> lowValue(card.rank) }), isSuited)
+        val lowCardHandRankMapKey = buildHandRankMapKey(cards.map { card -> lowValue(card.rank) }, isSuited)
 
         handRankMap[lowCardHandRankMapKey]?.let { result ->
             return result
@@ -109,10 +109,8 @@ class PokerHand(val cards: Set<StandardCard>) {
 
         private val handRankMap = mutableMapOf<String, Int>()
 
-        private fun buildHandRankMapKey(cardRankValues: ArrayList<Int>, isSuited: Boolean): String {
-            cardRankValues.sortDescending()
-
-            return cardRankValues.joinToString(" ") + if (isSuited) SUITED_SUFFIX else ""
+        private fun buildHandRankMapKey(cardRankValues: List<Int>, isSuited: Boolean): String {
+            return cardRankValues.sortedDescending().joinToString(" ") + if (isSuited) SUITED_SUFFIX else ""
         }
 
         private fun initHandRankMapForFourOfAKindsAndFullHouses() {
@@ -126,7 +124,7 @@ class PokerHand(val cards: Set<StandardCard>) {
                     }
 
                     val fourOfAkindKey = buildHandRankMapKey(
-                        arrayListOf(
+                        listOf(
                             majorCardRankValue,
                             majorCardRankValue,
                             majorCardRankValue,
@@ -137,7 +135,7 @@ class PokerHand(val cards: Set<StandardCard>) {
                     )
 
                     val fullHouseKey = buildHandRankMapKey(
-                        arrayListOf(
+                        listOf(
                             majorCardRankValue,
                             majorCardRankValue,
                             majorCardRankValue,
@@ -165,7 +163,7 @@ class PokerHand(val cards: Set<StandardCard>) {
                         }
 
                         val key = buildHandRankMapKey(
-                            arrayListOf(
+                            listOf(
                                 threeOfAKindCardRankValue,
                                 threeOfAKindCardRankValue,
                                 threeOfAKindCardRankValue,
@@ -193,7 +191,7 @@ class PokerHand(val cards: Set<StandardCard>) {
                         }
 
                         val key = buildHandRankMapKey(
-                            arrayListOf(
+                            listOf(
                                 topPairCardRankValue,
                                 topPairCardRankValue,
                                 bottomPairCardRankValue,
@@ -223,7 +221,7 @@ class PokerHand(val cards: Set<StandardCard>) {
                             }
 
                             val key = buildHandRankMapKey(
-                                arrayListOf(
+                                listOf(
                                     pairCardRankValue,
                                     pairCardRankValue,
                                     topKickerCardRankValue,
@@ -251,7 +249,7 @@ class PokerHand(val cards: Set<StandardCard>) {
                     for (thirdHighestCardRankValue in secondHighestCardRankValue - 1 downTo highValue(Rank.FOUR)) {
                         for (fourthHighestCardRankValue in thirdHighestCardRankValue - 1 downTo highValue(Rank.THREE)) {
                             for (fifthHighestCardRankValue in fourthHighestCardRankValue - 1 downTo highValue((Rank.TWO))) {
-                                val cardRankValues = arrayListOf(
+                                val cardRankValues = listOf(
                                     highCardRankValue,
                                     secondHighestCardRankValue,
                                     thirdHighestCardRankValue,
