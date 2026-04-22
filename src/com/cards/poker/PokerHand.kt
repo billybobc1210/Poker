@@ -109,7 +109,7 @@ class PokerHand(val cards: Set<StandardCard>) {
 
         private val handRankMap = mutableMapOf<String, Int>()
 
-        private fun buildHandRankMapKey(cardRankValues: List<Int>, isSuited: Boolean): String {
+        private fun buildHandRankMapKey(cardRankValues: List<Int>, isSuited: Boolean = false): String {
             return cardRankValues.sortedDescending().joinToString(" ") + if (isSuited) SUITED_SUFFIX else ""
         }
 
@@ -130,8 +130,7 @@ class PokerHand(val cards: Set<StandardCard>) {
                             majorCardRankValue,
                             majorCardRankValue,
                             minorCardRankValue
-                        ),
-                        false
+                        )
                     )
 
                     val fullHouseKey = buildHandRankMapKey(
@@ -141,8 +140,7 @@ class PokerHand(val cards: Set<StandardCard>) {
                             majorCardRankValue,
                             minorCardRankValue,
                             minorCardRankValue
-                        ),
-                        false
+                        )
                     )
 
                     handRankMap[fourOfAkindKey] = fourOfAKindHandRank--
@@ -169,8 +167,7 @@ class PokerHand(val cards: Set<StandardCard>) {
                                 threeOfAKindCardRankValue,
                                 topKickerCardRankValue,
                                 bottomKickerCardRankValue
-                            ),
-                            false
+                            )
                         )
 
                         handRankMap[key] = threeOfAKindHandRank--
@@ -197,8 +194,7 @@ class PokerHand(val cards: Set<StandardCard>) {
                                 bottomPairCardRankValue,
                                 bottomPairCardRankValue,
                                 kickerCardRankValue
-                            ),
-                            false
+                            )
                         )
 
                         handRankMap[key] = twoPairHandRank--
@@ -227,8 +223,7 @@ class PokerHand(val cards: Set<StandardCard>) {
                                     topKickerCardRankValue,
                                     middleKickerCardRankValue,
                                     bottomKickerCardRankValue
-                                ),
-                                false
+                                )
                             )
 
                             handRankMap[key] = pairHandRank--
@@ -256,7 +251,7 @@ class PokerHand(val cards: Set<StandardCard>) {
                                     fourthHighestCardRankValue,
                                     fifthHighestCardRankValue
                                 )
-                                val key: String = buildHandRankMapKey(cardRankValues,false)
+                                val key: String = buildHandRankMapKey(cardRankValues)
                                 val suitedKey: String = buildHandRankMapKey(cardRankValues,true)
 
                                 if (key == FALSE_FIVE_HIGH_STRAIGHT_HAND_RANK_KEY) {
