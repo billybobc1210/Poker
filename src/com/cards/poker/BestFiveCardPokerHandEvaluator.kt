@@ -14,7 +14,7 @@ class BestFiveCardPokerHandEvaluator(val cards: Set<StandardCard>) {
         val cardList = cards.map { it }
 
         for (i in 0 .. cardList.size-5) {
-            for (j in i+1..cardList.size-3) {
+            for (j in i+1..cardList.size-4) {
                 for (k in j+1..cardList.size-3) {
                     for (l in k+1..cardList.size-2) {
                         for (m in l+1..cardList.size-1) {
@@ -32,6 +32,7 @@ class BestFiveCardPokerHandEvaluator(val cards: Set<StandardCard>) {
                             if ((bestFiveCardPokerHand == null) || (bestFiveCardPokerHand.rank < pokerHand.rank)) {
                                 bestFiveCardPokerHand = pokerHand
                             }
+                            println()
                         }
                     }
                 }
